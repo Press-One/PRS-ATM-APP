@@ -93,6 +93,8 @@ export default observer(() => {
       return row;
     });
 
+    console.log(derivedProducers);
+
     await sleep(2000);
 
     runInAction(() => {
