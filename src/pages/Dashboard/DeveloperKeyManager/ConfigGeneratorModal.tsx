@@ -172,7 +172,7 @@ const ConfigGenerator = observer(() => {
           value={state.domain}
           onChange={(e) => {
             const { value } = e.target;
-            if (value.endsWith('/')) {
+            if (value.length > 10 && value.endsWith('/')) {
               state.domain = value.slice(0, value.length - 1);
             } else {
               state.domain = value;
