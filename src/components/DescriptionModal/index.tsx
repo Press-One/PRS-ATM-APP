@@ -35,8 +35,8 @@ const Description = observer(() => {
               args: [
                 accountName,
                 state.description,
-                accountStore.isProducer ? accountStore.account.producer.producer_key : '',
-                accountStore.publicKey,
+                '',
+                accountStore.isProducer ? accountStore.account.producer.producer_key : accountStore.publicKey,                
                 privateKey,
               ],
               logging: true,
@@ -75,19 +75,20 @@ const Description = observer(() => {
     <div className="bg-white rounded-12 text-center">
       <Fade in={true} timeout={500}>
         <div className="py-8 px-12 text-center">
-          <div className="w-55">
+          <div className="w-75">
             <div className="text-18 font-bold text-gray-700">编辑简介</div>
             <div>
               <div className="pt-3" />
               <TextField
                 className="w-full"
                 type="text"
-                placeholder="简介"
+                placeholder="请输入简介"
                 size="small"
                 multiline
-                rows={2}
+                rows={4}
                 value={state.description}
                 autoFocus={true}
+                inputProps={{ maxLength: 138 }}
                 onChange={(e) => {
                   runInAction(() => {
                     state.description = e.target.value;
