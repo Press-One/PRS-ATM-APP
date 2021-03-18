@@ -11,7 +11,7 @@ import {
   TableCell,
   Checkbox,
 } from '@material-ui/core';
-import { sleep, PrsAtm, Finance } from 'utils';
+import { sleep, PrsAtm, Finance, Producer } from 'utils';
 import moment from 'moment';
 import { IProducer } from 'types';
 import Button from 'components/Button';
@@ -25,6 +25,22 @@ import { MdInfo, MdSearch } from 'react-icons/md';
 import SearchInput from 'components/SearchInput';
 import Fade from '@material-ui/core/Fade';
 import Loading from 'components/Loading';
+import { shell } from 'electron';
+
+const wrapDesc = (desc: string) => {
+  return (
+    <span
+      onClick={(e: any) => {
+        if (e.target?.dataset?.url) {
+          shell.openExternal(
+            e.target.dataset.url
+          );
+        }
+      }}
+      dangerouslySetInnerHTML={{__html: desc.replace(/(http(s)?:\/\/\w+[^\s]+(\.[^\s]+){1,})/gi,'<span class="text-indigo-200 cursor-pointer" data-url="$1">$1</span>')}}>
+    </span>
+  )
+}
 
 export default observer(() => {
   const {
@@ -340,20 +356,7 @@ export default observer(() => {
           pass: async (privateKey: string, accountName: string) => {
             confirmDialogStore.setLoading(true);
             try {
-              if (!accountStore.isProducer) {
-                const resp: any = await PrsAtm.fetch({
-                  actions: ['producer', 'register'],
-                  args: [
-                    accountName,
-                    '',
-                    '',
-                    accountStore.publicKey,
-                    privateKey,
-                  ],
-                  logging: true,
-                });
-                console.log({ resp });
-              }
+              await Producer.check(privateKey, accountName);
               await PrsAtm.fetch({
                 actions: ['ballot', 'vote'],
                 args: [
@@ -580,9 +583,17 @@ export default observer(() => {
                           </div>
                         </TableCell>
                         <TableCell>
-                          <span className="font-bold text-gray-4a">
-                            {p.owner}
-                          </span>
+                          <Tooltip
+                            placement="top"
+                            title={wrapDesc(p.url)}
+                            disableHoverListener={!p.url}
+                            arrow
+                            interactive
+                          >
+                            <span className="font-bold text-gray-4a">
+                              {p.owner}
+                            </span>
+                          </Tooltip>
                         </TableCell>
                         <TableCell>{String(p.total_votes) || '-'}</TableCell>
                         <TableCell>
