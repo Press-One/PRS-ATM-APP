@@ -6,7 +6,7 @@ import Fade from '@material-ui/core/Fade';
 import Dialog from 'components/Dialog';
 import Button from 'components/Button';
 import { useStore } from 'store';
-import { PrsAtm, sleep } from 'utils';
+import { PrsAtm, sleep, Producer } from 'utils';
 
 const Description = observer(() => {
   const {  modalStore, accountStore } = useStore();
@@ -27,35 +27,17 @@ const Description = observer(() => {
     });
     await sleep(200);
     modalStore.verification.show({
-      pass: (privateKey: string, accountName: string) => {
-        (async () => {
-          try {
-            const resp: any = await PrsAtm.fetch({
-              actions: ['producer', 'register'],
-              args: [
-                accountName,
-                state.description,
-                '',
-                accountStore.isProducer ? accountStore.account.producer.producer_key : accountStore.publicKey,                
-                privateKey,
-              ],
-              logging: true,
-            });
-            console.log({ resp });
-            const account: any = await PrsAtm.fetch({
-              actions: ['atm', 'getAccount'],
-              args: [accountStore.account.account_name],
-            });
-            accountStore.setCurrentAccount(account);
-            runInAction(() => {
-              state.submitting = false;
-              state.done = true;
-            });
-            modalStore.description.hide();
-          } catch (err) {
-            console.log(err.message);
-          }
-        })();
+      pass: async (privateKey: string, accountName: string) => {
+        try {
+          await Producer.register(privateKey, accountName, state.description);
+          runInAction(() => {
+            state.submitting = false;
+            state.done = true;
+          });
+          modalStore.description.hide();
+        } catch (err) {
+          console.log(err.message);
+        }
       },
       cancel: () => {
         runInAction(() => {

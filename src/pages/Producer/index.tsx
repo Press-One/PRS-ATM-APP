@@ -11,7 +11,7 @@ import {
   TableCell,
   Checkbox,
 } from '@material-ui/core';
-import { sleep, PrsAtm, Finance } from 'utils';
+import { sleep, PrsAtm, Finance, Producer } from 'utils';
 import moment from 'moment';
 import { IProducer } from 'types';
 import Button from 'components/Button';
@@ -354,6 +354,7 @@ export default observer(() => {
           pass: async (privateKey: string, accountName: string) => {
             confirmDialogStore.setLoading(true);
             try {
+              await Producer.check(privateKey, accountName);
               await PrsAtm.fetch({
                 actions: ['ballot', 'vote'],
                 args: [
