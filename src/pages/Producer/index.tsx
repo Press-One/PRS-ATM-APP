@@ -20,6 +20,7 @@ import { useStore } from 'store';
 import { divide, add, subtract, bignumber } from 'mathjs';
 import Tooltip from '@material-ui/core/Tooltip';
 import { FaVoteYea } from 'react-icons/fa';
+import { RiProfileLine } from 'react-icons/ri';
 import BackToTop from 'components/BackToTop';
 import { MdInfo, MdSearch } from 'react-icons/md';
 import SearchInput from 'components/SearchInput';
@@ -32,15 +33,18 @@ const wrapDesc = (desc: string) => {
     <span
       onClick={(e: any) => {
         if (e.target?.dataset?.url) {
-          shell.openExternal(
-            e.target.dataset.url
-          );
+          shell.openExternal(e.target.dataset.url);
         }
       }}
-      dangerouslySetInnerHTML={{__html: desc.replace(/(http(s)?:\/\/\w+[^\s]+(\.[^\s]+){1,})/gi,'<span class="text-indigo-200 cursor-pointer" data-url="$1">$1</span>')}}>
-    </span>
-  )
-}
+      dangerouslySetInnerHTML={{
+        __html: desc.replace(
+          /(http(s)?:\/\/\w+[^\s]+(\.[^\s]+){1,})/gi,
+          '<span class="text-indigo-200 cursor-pointer" data-url="$1">$1</span>'
+        ),
+      }}
+    ></span>
+  );
+};
 
 export default observer(() => {
   const {
@@ -531,6 +535,7 @@ export default observer(() => {
                     if (!p.is_active) {
                       return null;
                     }
+                    const isMyself = p.owner === account.account_name;
                     return (
                       <TableRow
                         key={p.last_claim_time + index}
@@ -586,23 +591,37 @@ export default observer(() => {
                           <Tooltip
                             placement="top"
                             title={wrapDesc(p.url)}
-                            disableHoverListener={!p.url}
+                            disableHoverListener={!(p.url || '').trim()}
                             arrow
                             interactive
                           >
-                            <span className="font-bold text-gray-4a">
+                            <span className="font-bold text-gray-4a flex items-center">
                               {p.owner}
+                              {!isMyself && (p.url || '').trim() && (
+                                <RiProfileLine
+                                  size="18"
+                                  className="text-indigo-400 ml-3-px"
+                                />
+                              )}
+                              {isMyself && (
+                                <Button
+                                  className="ml-2"
+                                  outline
+                                  size="mini"
+                                  onClick={() => {
+                                    modalStore.description.show({
+                                      desc: account.producer.url || '',
+                                    });
+                                  }}
+                                >
+                                  编辑简介
+                                </Button>
+                              )}
                             </span>
                           </Tooltip>
                         </TableCell>
                         <TableCell>{String(p.total_votes) || '-'}</TableCell>
-                        <TableCell>
-                          {getVoteWeight(p.total_votes)}
-                          {/* {Math.floor(
-                            (p.total_votes / state.totalVotes) * 1000000
-                          ) / 10000} */}
-                          %
-                        </TableCell>
+                        <TableCell>{getVoteWeight(p.total_votes)}%</TableCell>
                         <TableCell>{p.unpaid_blocks || '-'}</TableCell>
                         <TableCell>
                           {('priority' in p ? p.priority : index + 1) <= 21 && (
