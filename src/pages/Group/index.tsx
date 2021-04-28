@@ -4,6 +4,8 @@ import Loading from 'components/Loading';
 import { sleep } from 'utils';
 import Sidebar from './Sidebar';
 import Header from './Header';
+import Editor from './Editor';
+import Contents from './Contents';
 
 export default observer(() => {
   const state = useLocalStore(() => ({
@@ -32,8 +34,14 @@ export default observer(() => {
       <div className="w-[250px] border-r border-l border-gray-200 h-screen">
         <Sidebar />
       </div>
-      <div className="flex-1 h-screen">
+      <div className="flex-1 h-screen bg-gray-f7">
         <Header />
+        <div className="mt-6 flex justify-center">
+          <Editor />
+        </div>
+        <div className="mt-2 flex justify-center">
+          <Contents />
+        </div>
       </div>
     </div>
   );

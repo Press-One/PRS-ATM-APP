@@ -34,7 +34,7 @@ export default observer(() => {
 
   return (
     <div className="relative flex flex-col h-screen">
-      <div className="pl-4 pr-3 bg-gray-f7 leading-none h-13 flex items-center justify-between text-gray-500 border-b border-gray-200 font-bold tracking-widest">
+      <div className="pl-4 pr-3 leading-none h-13 flex items-center justify-between text-gray-500 border-b border-gray-200 font-bold tracking-widest">
         <div className="flex items-center">
           <div className="border-4 rounded-full border-indigo-200 w-4 h-4 mr-2" />
           <span className="opacity-75 text-15">圈子</span>
