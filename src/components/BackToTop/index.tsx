@@ -32,7 +32,7 @@ export default (props?: IProps) => {
       className="fixed bottom-0 right-0 mb-6 pb-4 mr-5 cursor-pointer"
       onClick={backToTop}
     >
-      <div className="rounded-full flex items-center justify-center leading-none w-10 h-10 bg-indigo-300 text-white">
+      <div className="rounded-full flex items-center justify-center leading-none w-10 h-10 border border-gray-af text-gray-af">
         <div className="text-20">
           <MdArrowUpward />
         </div>

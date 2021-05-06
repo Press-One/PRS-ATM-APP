@@ -1,21 +1,26 @@
 import React from 'react';
 import { observer, useLocalStore } from 'mobx-react-lite';
 import Loading from 'components/Loading';
+import Button from 'components/Button';
 import { sleep } from 'utils';
 import Sidebar from './Sidebar';
 import Header from './Header';
 import Editor from './Editor';
 import Contents from './Contents';
+import BackToTop from 'components/BackToTop';
 
 export default observer(() => {
   const state = useLocalStore(() => ({
     isFetched: false,
+    backToTopEnabled: false,
   }));
 
   React.useEffect(() => {
     (async () => {
       await sleep(500);
       state.isFetched = true;
+      await sleep(500);
+      state.backToTopEnabled = true;
     })();
   }, [state]);
 
@@ -40,10 +45,18 @@ export default observer(() => {
           <div className="pt-6 flex justify-center">
             <Editor />
           </div>
+          <div className="py-2 mt-3 flex justify-center">
+            <Button outline>有 2 条新内容</Button>
+          </div>
           <div className="flex justify-center pb-5">
             <Contents />
           </div>
         </div>
+        {state.backToTopEnabled && (
+          <BackToTop
+            element={document.querySelector('.scroll-view') as HTMLElement}
+          />
+        )}
         <style jsx>{`
           .scroll-view {
             height: calc(100vh - 52px);
