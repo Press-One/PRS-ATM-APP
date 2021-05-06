@@ -5,6 +5,7 @@ import { MdInfoOutline } from 'react-icons/md';
 import { HiOutlineShare } from 'react-icons/hi';
 import { FiDelete, FiChevronLeft } from 'react-icons/fi';
 import { Menu, MenuItem } from '@material-ui/core';
+import Loading from 'components/Loading';
 
 export default observer(() => {
   const state = useLocalStore(() => ({
@@ -44,8 +45,8 @@ export default observer(() => {
         <div className="font-bold text-gray-4a text-15 leading-none tracking-wide">
           今天有什么瓜可以吃？
         </div>
-        <div className="py-1 px-3 rounded-full bg-indigo-100 text-indigo-400 text-12 leading-none ml-3 font-bold tracking-wide">
-          同步中...
+        <div className="flex items-center py-1 px-3 rounded-full bg-indigo-100 text-indigo-400 text-12 leading-none ml-3 font-bold tracking-wide">
+          <span className="mr-1">同步中</span> <Loading size={12} />
         </div>
       </div>
       <div>

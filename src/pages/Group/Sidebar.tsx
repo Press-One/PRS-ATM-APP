@@ -3,9 +3,11 @@ import { observer, useLocalStore } from 'mobx-react-lite';
 import { BiUser } from 'react-icons/bi';
 import { RiAddLine } from 'react-icons/ri';
 import GroupEditorModal from './GroupEditorModal';
+import classNames from 'classnames';
 
 export default observer(() => {
   const state = useLocalStore(() => ({
+    activeGroupId: '',
     showGroupEditorModal: false,
   }));
 
@@ -32,6 +34,10 @@ export default observer(() => {
     },
   ];
 
+  const openGroup = (groupId: string) => {
+    state.activeGroupId = groupId;
+  };
+
   return (
     <div className="relative flex flex-col h-screen">
       <div className="pl-4 pr-3 leading-none h-13 flex items-center justify-between text-gray-500 border-b border-gray-200 font-bold tracking-widest">
@@ -56,7 +62,17 @@ export default observer(() => {
       <div className="flex-1 overflow-y-auto">
         {groups.map((group: any) => (
           <div key={group.group_id}>
-            <div className="leading-none font-bold text-14 py-3 px-4 cursor-pointer text-gray-4a hover:bg-opacity-25 hover:bg-indigo-300 hover:text-indigo-400 tracking-wider">
+            <div
+              className={classNames(
+                {
+                  'bg-indigo-300 text-indigo-400 bg-opacity-25':
+                    state.activeGroupId === group.group_id,
+                  'text-gray-4a': state.activeGroupId !== group.group_id,
+                },
+                'leading-none font-bold text-14 py-4 px-4 cursor-pointer hover:bg-opacity-25 hover:bg-indigo-300 hover:text-indigo-400 tracking-wider'
+              )}
+              onClick={() => openGroup(group.group_id)}
+            >
               {group.group_name}
             </div>
           </div>

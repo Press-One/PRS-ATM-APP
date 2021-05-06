@@ -36,12 +36,19 @@ export default observer(() => {
       </div>
       <div className="flex-1 h-screen bg-gray-f7">
         <Header />
-        <div className="mt-6 flex justify-center">
-          <Editor />
+        <div className="overflow-y-auto scroll-view">
+          <div className="pt-6 flex justify-center">
+            <Editor />
+          </div>
+          <div className="flex justify-center pb-5">
+            <Contents />
+          </div>
         </div>
-        <div className="mt-2 flex justify-center">
-          <Contents />
-        </div>
+        <style jsx>{`
+          .scroll-view {
+            height: calc(100vh - 52px);
+          }
+        `}</style>
       </div>
     </div>
   );

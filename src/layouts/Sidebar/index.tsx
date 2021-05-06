@@ -40,7 +40,7 @@ export default observer(() => {
     <div
       className={classNames(
         {
-          'bg-gray-f7 opacity-[0.8]': useContrastBg,
+          'bg-gray-f7 opacity-[0.7]': useContrastBg,
         },
         'px-4 border-r border-gray-f2 h-screen w-50 box-border flex flex-col justify-between'
       )}

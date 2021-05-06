@@ -20,18 +20,18 @@ export default observer(() => {
   };
 
   return (
-    <div className="rounded-12 bg-white mb-3 px-8 py-4 w-[600px] box-border">
+    <div className="rounded-12 bg-white px-8 pt-5 pb-4 w-[600px] box-border">
       <TextareaAutosize
         className="w-full textarea-autosize"
         placeholder="有什么想法？"
-        minRows={3}
+        minRows={2}
         value={state.content}
         autoFocus={true}
         onChange={(e) => {
           state.content = e.target.value;
         }}
       />
-      <div className="mt-2 flex justify-end">
+      <div className="mt-1 flex justify-end">
         <Button size="small" onClick={submit}>
           发布
         </Button>
