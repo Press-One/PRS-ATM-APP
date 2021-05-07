@@ -9,21 +9,29 @@ import Editor from './Editor';
 import Contents from './Contents';
 import BackToTop from 'components/BackToTop';
 import { useStore } from 'store';
+import GroupApi from 'apis/group';
 
 export default observer(() => {
   const { groupStore } = useStore();
   const state = useLocalStore(() => ({
     isFetched: false,
-    backToTopEnabled: false,
     hasUnreadContents: false,
   }));
 
   React.useEffect(() => {
     (async () => {
+      const [nodeInfo, { groups }] = await Promise.all([
+        GroupApi.fetchMyNodeInfo(),
+        GroupApi.fetchMyGroups(),
+      ]);
+      if (groups) {
+        console.log({ groups });
+        console.log({ nodeInfo });
+        groupStore.setNodeInfo(nodeInfo);
+        groupStore.addGroups(groups);
+      }
       await sleep(500);
       state.isFetched = true;
-      await sleep(500);
-      state.backToTopEnabled = true;
     })();
   }, [state]);
 
@@ -59,11 +67,7 @@ export default observer(() => {
                 <Contents />
               </div>
             </div>
-            {state.backToTopEnabled && (
-              <BackToTop
-                element={document.querySelector('.scroll-view') as HTMLElement}
-              />
-            )}
+            <BackToTop elementSelector=".scroll-view" />
             <style jsx>{`
               .scroll-view {
                 height: calc(100vh - 52px);

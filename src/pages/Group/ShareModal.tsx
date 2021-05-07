@@ -16,7 +16,7 @@ interface IProps {
 }
 
 const Share = observer((props: IProps) => {
-  const { snackbarStore } = useStore();
+  const { snackbarStore, groupStore } = useStore();
   const state = useLocalStore(() => ({
     name: '',
     loading: false,
@@ -39,14 +39,21 @@ const Share = observer((props: IProps) => {
           <Button
             fullWidth
             onClick={async () => {
+              if (!groupStore.groupSeed) {
+                snackbarStore.show({
+                  message: '出错了，找不到种子文件',
+                  type: 'error',
+                });
+                return;
+              }
               try {
                 const file = await remote.dialog.showSaveDialog({
-                  defaultPath: 'seed.json',
+                  defaultPath: `seed.${groupStore.group.GroupName}.json`,
                 });
                 if (!file.canceled && file.filePath) {
                   await pWriteFile(
                     file.filePath.toString(),
-                    JSON.stringify(state.seed)
+                    JSON.stringify(groupStore.groupSeed)
                   );
                   await sleep(400);
                   props.onClose();

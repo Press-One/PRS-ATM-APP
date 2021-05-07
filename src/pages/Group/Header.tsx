@@ -51,6 +51,18 @@ export default observer(() => {
     handleMenuClose();
   };
 
+  const deleteGroup = () => {
+    confirmDialogStore.show({
+      content: `确定要删除圈子吗？<br />删除之后将无法恢复`,
+      okText: '确定',
+      isDangerous: true,
+      ok: () => {
+        confirmDialogStore.hide();
+      },
+    });
+    handleMenuClose();
+  };
+
   if (state.showBackButton) {
     return (
       <div className="border-b border-gray-200 h-13 px-5 flex items-center">
@@ -74,7 +86,7 @@ export default observer(() => {
           className="font-bold text-gray-4a text-15 leading-none tracking-wide"
           onClick={() => openGroupInfoModal()}
         >
-          {groupStore.group.group_name}
+          {groupStore.group.GroupName}{' '}
         </div>
         {state.loading && (
           <div className="flex items-center py-1 px-3 rounded-full bg-indigo-100 text-indigo-400 text-12 leading-none ml-3 font-bold tracking-wide">
@@ -118,14 +130,26 @@ export default observer(() => {
               <span className="font-bold">分享</span>
             </div>
           </MenuItem>
-          <MenuItem onClick={() => leaveGroup()}>
-            <div className="flex items-center text-red-400 leading-none pl-1 py-2">
-              <span className="flex items-center mr-3">
-                <FiDelete className="text-16 opacity-50" />
-              </span>
-              <span className="font-bold">离开</span>
-            </div>
-          </MenuItem>
+          {!groupStore.isCurrentGroupOwner && (
+            <MenuItem onClick={() => leaveGroup()}>
+              <div className="flex items-center text-red-400 leading-none pl-1 py-2">
+                <span className="flex items-center mr-3">
+                  <FiDelete className="text-16 opacity-50" />
+                </span>
+                <span className="font-bold">离开</span>
+              </div>
+            </MenuItem>
+          )}
+          {groupStore.isCurrentGroupOwner && (
+            <MenuItem onClick={() => deleteGroup()}>
+              <div className="flex items-center text-red-400 leading-none pl-1 py-2">
+                <span className="flex items-center mr-3">
+                  <FiDelete className="text-16 opacity-50" />
+                </span>
+                <span className="font-bold">删除</span>
+              </div>
+            </MenuItem>
+          )}
         </Menu>
       </div>
       <ShareModal

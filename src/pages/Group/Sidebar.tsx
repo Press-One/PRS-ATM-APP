@@ -20,33 +20,8 @@ export default observer(() => {
     showJoinGroupModal: false,
   }));
 
-  const groups: any = [
-    {
-      group_id: '8923a026-eca8-4670-be4c-716166d5ba0f',
-      group_name: '自学 Go 语言',
-    },
-    {
-      group_id: '8923a026-eca8-4670-be4c-716166d5ba01',
-      group_name: '定投改变命运',
-    },
-    {
-      group_id: '8923a026-eca8-4670-be4c-716166d5ba02',
-      group_name: '暴富指南',
-    },
-    {
-      group_id: '8923a026-eca8-4670-be4c-716166d5ba03',
-      group_name: '今天有什么瓜可以吃？',
-    },
-    {
-      group_id: '8923a026-eca8-4670-be4c-716166d5ba04',
-      group_name: '恋情情感专区',
-    },
-  ];
-
-  groupStore.addGroups(groups);
-
   const openGroup = (groupId: string) => {
-    groupStore.setGroupId(groupId);
+    groupStore.setId(groupId);
   };
 
   const openGroupEditorModal = () => {
@@ -128,19 +103,19 @@ export default observer(() => {
       </div>
       <div className="flex-1 overflow-y-auto">
         {groupStore.groups.map((group: any) => (
-          <div key={group.group_id}>
+          <div key={group.GroupId}>
             <div
               className={classNames(
                 {
                   'bg-indigo-300 text-indigo-400 bg-opacity-25':
-                    groupStore.groupId === group.group_id,
-                  'text-gray-4a': groupStore.groupId !== group.group_id,
+                    groupStore.id === group.GroupId,
+                  'text-gray-4a': groupStore.id !== group.GroupId,
                 },
                 'leading-none font-bold text-14 py-4 px-4 cursor-pointer hover:bg-opacity-25 hover:bg-indigo-300 hover:text-indigo-400 tracking-wider'
               )}
-              onClick={() => openGroup(group.group_id)}
+              onClick={() => openGroup(group.GroupId)}
             >
-              {group.group_name}
+              {group.GroupName}
             </div>
           </div>
         ))}
