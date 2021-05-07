@@ -2,12 +2,14 @@ import React from 'react';
 import { observer, useLocalStore } from 'mobx-react-lite';
 import { BiUser } from 'react-icons/bi';
 import { RiAddLine } from 'react-icons/ri';
+import { FiMoreHorizontal } from 'react-icons/fi';
 import { MdPeopleOutline } from 'react-icons/md';
 import classNames from 'classnames';
 import { Menu, MenuItem } from '@material-ui/core';
 import GroupEditorModal from './GroupEditorModal';
 import MyNodeInfoModal from './MyNodeInfoModal';
 import JoinGroupModal from './JoinGroupModal';
+import GroupMenu from './GroupMenu';
 import { useStore } from 'store';
 
 export default observer(() => {
@@ -111,11 +113,21 @@ export default observer(() => {
                     groupStore.id === group.GroupId,
                   'text-gray-4a': groupStore.id !== group.GroupId,
                 },
-                'leading-none font-bold text-14 py-4 px-4 cursor-pointer hover:bg-opacity-25 hover:bg-indigo-300 hover:text-indigo-400 tracking-wider'
+                'leading-none font-bold text-14 py-4 px-4 cursor-pointer tracking-wider flex justify-between items-center item'
               )}
               onClick={() => openGroup(group.GroupId)}
             >
-              {group.GroupName}
+              <div className="py-1 truncate">{group.GroupName}</div>
+              {groupStore.id === group.GroupId && (
+                <div
+                  onClick={(e: any) => {
+                    e.stopPropagation();
+                  }}
+                  className="pl-2 menu text-20"
+                >
+                  <GroupMenu />
+                </div>
+              )}
             </div>
           </div>
         ))}
@@ -138,6 +150,14 @@ export default observer(() => {
           state.showJoinGroupModal = false;
         }}
       />
+      <style jsx>{`
+        .item .menu {
+          display: none;
+        }
+        .item:hover .menu {
+          display: block;
+        }
+      `}</style>
     </div>
   );
 });

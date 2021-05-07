@@ -12,7 +12,7 @@ import { useStore } from 'store';
 import GroupApi from 'apis/group';
 
 export default observer(() => {
-  const { groupStore } = useStore();
+  const { groupStore, confirmDialogStore } = useStore();
   const state = useLocalStore(() => ({
     isFetched: false,
     hasUnreadContents: false,
@@ -20,18 +20,30 @@ export default observer(() => {
 
   React.useEffect(() => {
     (async () => {
-      const [nodeInfo, { groups }] = await Promise.all([
-        GroupApi.fetchMyNodeInfo(),
-        GroupApi.fetchMyGroups(),
-      ]);
-      if (groups) {
-        console.log({ groups });
-        console.log({ nodeInfo });
-        groupStore.setNodeInfo(nodeInfo);
-        groupStore.addGroups(groups);
+      try {
+        const [nodeInfo, { groups }] = await Promise.all([
+          GroupApi.fetchMyNodeInfo(),
+          GroupApi.fetchMyGroups(),
+        ]);
+        if (groups) {
+          console.log({ groups });
+          console.log({ nodeInfo });
+          groupStore.setNodeInfo(nodeInfo);
+          groupStore.addGroups(groups);
+        }
+        await sleep(500);
+        state.isFetched = true;
+      } catch (err) {
+        console.log(err);
+        await sleep(500);
+        confirmDialogStore.show({
+          content: `圈子没能正常启动，请再尝试一下`,
+          okText: '重新启动',
+          ok: () => {
+            confirmDialogStore.hide();
+          },
+        });
       }
-      await sleep(500);
-      state.isFetched = true;
     })();
   }, [state]);
 
