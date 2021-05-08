@@ -61,6 +61,19 @@ export interface NodeInfo {
   node_version: string;
 }
 
+interface ContentPayload {
+  type: string;
+  object: {
+    type: string;
+    content: string;
+    name: string;
+  };
+  target: {
+    id: string;
+    type: string;
+  };
+}
+
 export interface Trx {
   Msg: {
     TrxId: string;
@@ -119,11 +132,12 @@ export default {
       base: BASE,
     }) as Promise<null | Array<ContentItem>>;
   },
-  postContent(groupId: string, content: string) {
+  postContent(content: ContentPayload) {
     return request(`/api/v1/group/content`, {
       method: 'POST',
       base: BASE,
-      body: { group_id: groupId, content },
+      body: content,
+      minPendingDuration: 500,
     }) as Promise<PostContentResult>;
   },
   fetchMyNodeInfo() {

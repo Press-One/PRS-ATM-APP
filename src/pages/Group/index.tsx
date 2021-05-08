@@ -10,6 +10,7 @@ import Contents from './Contents';
 import BackToTop from 'components/BackToTop';
 import { useStore } from 'store';
 import GroupApi from 'apis/group';
+import { reaction } from 'mobx';
 
 export default observer(() => {
   const { groupStore, confirmDialogStore } = useStore();
@@ -17,6 +18,23 @@ export default observer(() => {
     isFetched: false,
     hasUnreadContents: false,
   }));
+
+  React.useEffect(() => {
+    const disposer = reaction(
+      () => groupStore.id,
+      async (groupId) => {
+        try {
+          const contents = await GroupApi.fetchContents(groupId);
+          console.log({ contents });
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    );
+    return () => {
+      disposer();
+    };
+  }, [groupStore]);
 
   React.useEffect(() => {
     (async () => {
@@ -30,6 +48,8 @@ export default observer(() => {
           console.log({ nodeInfo });
           groupStore.setNodeInfo(nodeInfo);
           groupStore.addGroups(groups);
+          const firstGroup = groupStore.groups[0];
+          groupStore.setId(firstGroup.GroupId);
         }
         await sleep(500);
         state.isFetched = true;

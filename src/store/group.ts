@@ -1,4 +1,4 @@
-import { Group, CreateGroupsResult, NodeInfo } from 'apis/group';
+import { Group, CreateGroupsResult, NodeInfo, ContentItem } from 'apis/group';
 import Store from 'electron-store';
 
 const store = new Store();
@@ -7,15 +7,22 @@ export function createGroupStore() {
   return {
     nodeInfo: {} as NodeInfo,
     id: '',
-    ids: [] as string[],
-    map: {} as { [key: string]: Group },
+    ids: <string[]>[],
+    map: <{ [key: string]: Group }>{},
+    contentTrxIds: <string[]>[],
+    contentMap: <{ [key: string]: ContentItem }>{},
     get isSelected() {
       return !!this.id;
     },
     get groups() {
       return this.ids
-        .map((id: any) => this.map[id] as Group)
+        .map((id: any) => this.map[id])
         .sort((a, b) => b.LastUpdate - a.LastUpdate);
+    },
+    get contents() {
+      return this.contentTrxIds
+        .map((trxId: any) => this.contentMap[trxId])
+        .sort((a, b) => b.TimeStamp - a.TimeStamp);
     },
     get group() {
       return this.map[this.id];
@@ -55,6 +62,14 @@ export function createGroupStore() {
     },
     getSeedFromStore(id: string) {
       return store.get(`group_seed_${id}`);
+    },
+    addContents(contents: ContentItem[] = []) {
+      for (const content of contents) {
+        if (!this.contentMap[content.TrxId]) {
+          this.contentTrxIds.unshift(content.TrxId);
+        }
+        this.contentMap[content.TrxId] = content;
+      }
     },
   };
 }

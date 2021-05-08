@@ -3,20 +3,50 @@ import { observer, useLocalStore } from 'mobx-react-lite';
 import Button from 'components/Button';
 import { useStore } from 'store';
 import TextareaAutosize from 'react-textarea-autosize';
+import GroupApi from 'apis/group';
+import classNames from 'classnames';
+import { sleep } from 'utils';
 
 export default observer(() => {
-  const { snackbarStore } = useStore();
-
+  const { snackbarStore, groupStore } = useStore();
   const state = useLocalStore(() => ({
     content: '',
-    submitting: false,
+    loading: false,
     done: false,
   }));
-  const submit = () => {
-    state.content = '';
-    snackbarStore.show({
-      message: '发布成功',
-    });
+
+  const submit = async () => {
+    if (!state.content || state.loading) {
+      return;
+    }
+    state.loading = true;
+    state.done = false;
+    try {
+      const res = await GroupApi.postContent({
+        type: 'Add',
+        object: {
+          type: 'Note',
+          content: state.content,
+          name: '',
+        },
+        target: {
+          id: groupStore.id,
+          type: 'Group',
+        },
+      });
+      console.log({ res });
+      state.loading = false;
+      state.done = true;
+      await sleep(400);
+      state.content = '';
+    } catch (err) {
+      state.loading = false;
+      console.log(err);
+      snackbarStore.show({
+        message: '貌似出错了',
+        type: 'error',
+      });
+    }
   };
 
   return (
@@ -32,7 +62,15 @@ export default observer(() => {
         }}
       />
       <div className="mt-1 flex justify-end">
-        <Button size="small" onClick={submit}>
+        <Button
+          size="small"
+          className={classNames({
+            'opacity-50': !state.content,
+          })}
+          isDoing={state.loading}
+          isDone={state.done}
+          onClick={submit}
+        >
           发布
         </Button>
       </div>
