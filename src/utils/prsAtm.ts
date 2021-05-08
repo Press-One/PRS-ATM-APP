@@ -30,6 +30,9 @@ const fetch = async (options: IOptions) => {
         callbackEventName: id,
       })
     );
+    const timeoutTimer = setTimeout(() => {
+      reject(new Error(`PRS-ATM ${logId}: timeout`));
+    }, 10 * 1000);
     try {
       if (options.logging) {
         console.log(`PRS-ATM ${logId}: execute`);
@@ -37,6 +40,7 @@ const fetch = async (options: IOptions) => {
     } catch (err) {}
     ipcRenderer.on(id, (_event, resp) => {
       resolve(resp);
+      clearTimeout(timeoutTimer);
       try {
         if (options.logging) {
           console.log(`PRS-ATM ${logId}: response`);
@@ -46,6 +50,7 @@ const fetch = async (options: IOptions) => {
     });
     ipcRenderer.on(`prs-atm-${id}-error`, (_e, err) => {
       reject(err);
+      clearTimeout(timeoutTimer);
       try {
         if (options.logging) {
           console.log(`PRS-ATM ${logId}: failed`);

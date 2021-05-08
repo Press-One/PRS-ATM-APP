@@ -1,5 +1,5 @@
 {
-  "version": "1.0.22",
+  "version": "1.0.23",
   "name": "prs-atm-app",
   "productName": "PRS ATM",
   "description": "PRS ATM Desktop App",
@@ -21,7 +21,7 @@
     "package:release:mac": "env-cmd electron-builder build --mac --publish never",
     "package:release:win": "env-cmd electron-builder build --win --publish never",
     "package:release:linux": "env-cmd electron-builder build --linux --publish never",
-    "package:release:win32": "env-cmd electron-builder build --win --ia32 -c.nsis.artifactName=\"PRS-ATM-1.0.22-ia32.exe\" --publish never",
+    "package:release:win32": "env-cmd electron-builder build --win --ia32 -c.nsis.artifactName=\"PRS-ATM-1.0.23-ia32.exe\" --publish never",
     "postinstall": "yarn build && electron-builder install-app-deps && yarn cross-env NODE_ENV=development webpack --config ./.erb/configs/webpack.config.renderer.dev.dll.babel.js && opencollective-postinstall && yarn-deduplicate yarn.lock",
     "start": "node -r @babel/register ./.erb/scripts/CheckPortInUse.js && concurrently \"yarn start:main\" \"cross-env yarn start:renderer\"",
     "start:main": "cross-env NODE_ENV=development electron .",
@@ -46,7 +46,7 @@
     "appId": "one.press.atm",
     "artifactName": "PRS-ATM-${version}.${ext}",
     "releaseInfo": {
-      "releaseNotes": "1.优化交易的支付体验"
+      "releaseNotes": "1.优化网络加载速度"
     },
     "files": [
       "dist/",

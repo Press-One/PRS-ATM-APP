@@ -27,11 +27,16 @@ export default observer(() => {
 
   React.useEffect(() => {
     (async () => {
+      (window as any).PrsAtm = PrsAtm;
       const version = await PrsAtm.fetch({
         actions: ['getVersion'],
         logging: true,
       });
       state.version = version as string;
+      await PrsAtm.fetch({
+        actions: ['sushitrain', 'config'],
+        logging: true,
+      });
     })();
   }, []);
 

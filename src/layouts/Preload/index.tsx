@@ -44,6 +44,7 @@ export default observer(() => {
               walletStore.setBalance(balance);
             } catch (err) {
               walletStore.setFailed(true);
+              throw new Error('timeout');
             }
             walletStore.setLoading(false);
           };

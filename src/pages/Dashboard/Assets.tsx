@@ -318,9 +318,13 @@ export default observer((props: IProps) => {
   React.useEffect(() => {
     (async () => {
       try {
+        if (walletStore.loading) {
+          return;
+        }
         const balance: any = await PrsAtm.fetch({
           actions: ['account', 'getBalance'],
           args: [accountStore.account.account_name],
+          logging: true,
         });
         walletStore.setBalance(balance);
       } catch (err) {}
