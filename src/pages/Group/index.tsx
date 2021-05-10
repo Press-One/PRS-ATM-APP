@@ -10,7 +10,6 @@ import Contents from './Contents';
 import BackToTop from 'components/BackToTop';
 import { useStore } from 'store';
 import GroupApi from 'apis/group';
-import { reaction } from 'mobx';
 
 export default observer(() => {
   const { groupStore, confirmDialogStore } = useStore();
@@ -20,21 +19,19 @@ export default observer(() => {
   }));
 
   React.useEffect(() => {
-    const disposer = reaction(
-      () => groupStore.id,
-      async (groupId) => {
-        try {
-          const contents = await GroupApi.fetchContents(groupId);
-          console.log({ contents });
-        } catch (err) {
-          console.log(err);
-        }
+    if (!groupStore.id) {
+      return;
+    }
+    (async () => {
+      try {
+        const contents = await GroupApi.fetchContents(groupStore.id);
+        groupStore.addContents(contents || []);
+        groupStore.addContents(groupStore.getCachedNewContentsFromStore());
+      } catch (err) {
+        console.log(err);
       }
-    );
-    return () => {
-      disposer();
-    };
-  }, [groupStore]);
+    })();
+  }, [groupStore.id]);
 
   React.useEffect(() => {
     (async () => {
@@ -43,9 +40,7 @@ export default observer(() => {
           GroupApi.fetchMyNodeInfo(),
           GroupApi.fetchMyGroups(),
         ]);
-        if (groups) {
-          console.log({ groups });
-          console.log({ nodeInfo });
+        if (groups && groups.length > 0) {
           groupStore.setNodeInfo(nodeInfo);
           groupStore.addGroups(groups);
           const firstGroup = groupStore.groups[0];
@@ -60,7 +55,9 @@ export default observer(() => {
           content: `圈子没能正常启动，请再尝试一下`,
           okText: '重新启动',
           ok: () => {
+            localStorage.setItem('GROUP_NODE_PORT', '8002');
             confirmDialogStore.hide();
+            window.location.reload();
           },
         });
       }

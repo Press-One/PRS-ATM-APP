@@ -8,9 +8,11 @@ import { Menu, MenuItem } from '@material-ui/core';
 import ShareModal from './ShareModal';
 import GroupInfoModal from './GroupInfoModal';
 import { useStore } from 'store';
+import GroupApi from 'apis/group';
+import { sleep } from 'utils';
 
 export default observer(() => {
-  const { confirmDialogStore, groupStore } = useStore();
+  const { confirmDialogStore, groupStore, snackbarStore } = useStore();
   const state = useLocalStore(() => ({
     anchorEl: null,
     showMenu: false,
@@ -41,8 +43,29 @@ export default observer(() => {
       content: `确定要离开圈子吗？`,
       okText: '确定',
       isDangerous: true,
-      ok: () => {
-        confirmDialogStore.hide();
+      ok: async () => {
+        confirmDialogStore.setLoading(true);
+        try {
+          await GroupApi.leaveGroup(groupStore.id);
+          await sleep(500);
+          groupStore.removeGroup();
+          const firstGroup = groupStore.groups[0];
+          if (firstGroup) {
+            groupStore.setId(firstGroup.GroupId);
+          }
+          confirmDialogStore.setLoading(false);
+          confirmDialogStore.hide();
+          await sleep(300);
+          snackbarStore.show({
+            message: '已离开',
+          });
+        } catch (err) {
+          console.log(err);
+          snackbarStore.show({
+            message: '貌似出错了',
+            type: 'error',
+          });
+        }
       },
     });
     handleMenuClose();
@@ -53,8 +76,29 @@ export default observer(() => {
       content: `确定要删除圈子吗？<br />删除之后将无法恢复`,
       okText: '确定',
       isDangerous: true,
-      ok: () => {
-        confirmDialogStore.hide();
+      ok: async () => {
+        confirmDialogStore.setLoading(true);
+        try {
+          await GroupApi.deleteGroup(groupStore.id);
+          await sleep(500);
+          groupStore.removeGroup();
+          const firstGroup = groupStore.groups[0];
+          if (firstGroup) {
+            groupStore.setId(firstGroup.GroupId);
+          }
+          confirmDialogStore.setLoading(false);
+          confirmDialogStore.hide();
+          await sleep(300);
+          snackbarStore.show({
+            message: '已删除',
+          });
+        } catch (err) {
+          console.log(err);
+          snackbarStore.show({
+            message: '貌似出错了',
+            type: 'error',
+          });
+        }
       },
     });
     handleMenuClose();

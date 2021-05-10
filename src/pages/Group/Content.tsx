@@ -6,8 +6,12 @@ import { FiChevronDown } from 'react-icons/fi';
 import { RiErrorWarningFill, RiCheckboxCircleFill } from 'react-icons/ri';
 import Loading from 'components/Loading';
 import Tooltip from '@material-ui/core/Tooltip';
+import { ContentItem } from 'apis/group';
+import { useStore } from 'store';
 
-export default observer((props: any) => {
+export default observer((props: { content: ContentItem }) => {
+  const { groupStore } = useStore();
+
   const { content } = props;
   const state = useLocalStore(() => ({
     status: '',
@@ -27,40 +31,54 @@ export default observer((props: any) => {
     }
   }, []);
 
-  const publish = async () => {
-    state.status = 'publishing';
-    await sleep(2000);
-    state.status = 'failed';
-    await sleep(2000);
-  };
-
-  const republish = async () => {
-    state.status = 'publishing';
-    await sleep(2000);
-    state.status = 'published';
-    await sleep(2000);
-    state.status = '';
-  };
+  React.useEffect(() => {
+    (async () => {
+      const isJustAdded = groupStore.justAddedContentTrxId === content.TrxId;
+      if (isJustAdded) {
+        state.status = 'publishing';
+        await sleep(1500);
+        if (content.Publisher) {
+          state.status = 'published';
+          await sleep(1000);
+          state.status = '';
+        } else {
+          state.status = 'failed';
+        }
+        groupStore.setJustAddedContentTrxId('');
+      } else if (!content.Publisher) {
+        state.status = 'failed';
+      }
+    })();
+  }, [groupStore.justAddedContentTrxId, content]);
 
   return (
-    <div
-      className="rounded-12 bg-white mt-3 px-8 py-6 w-[600px] box-border relative"
-      key={content.author}
-    >
+    <div className="rounded-12 bg-white mt-3 px-8 py-6 w-[600px] box-border relative">
       <div className="flex relative">
         <img
-          onClick={() => publish()}
           className="rounded-full border-shadow absolute top-0 left-0"
-          src={content.avatar}
-          alt={content.author}
+          src={`https://source.unsplash.com/user/erondu/10${
+            String(content.TimeStamp)[8]
+          }x10${String(content.TimeStamp)[8]}`}
+          alt={content.Publisher}
           width="42"
           height="42"
         />
         <div className="pl-12 ml-2">
           <div className="flex items-center leading-none mt-3-px">
-            <div className="text-gray-88 font-bold">{content.author}</div>
+            <Tooltip
+              placement="top"
+              title={`节点 ID：${content.Publisher}`}
+              interactive
+              arrow
+            >
+              <div className="text-gray-88 font-bold">
+                {content.Publisher.slice(0, 8) || 'Me'}
+              </div>
+            </Tooltip>
             <div className="px-2 text-gray-99">·</div>
-            <div className="text-12 text-gray-bd">{ago(content.createdAt)}</div>
+            <div className="text-12 text-gray-bd">
+              {ago(new Date(content.TimeStamp / 1000000).toISOString())}
+            </div>
           </div>
           <div
             ref={contentRef}
@@ -72,7 +90,7 @@ export default observer((props: any) => {
               'mt-2 text-gray-4a break-words whitespace-pre-wrap tracking-wide'
             )}
           >
-            {content.content}
+            {content.Content.content}
           </div>
           {!state.expand && state.canExpand && (
             <div className="relative mt-6-px pb-2">
@@ -88,24 +106,25 @@ export default observer((props: any) => {
         </div>
       </div>
       {state.status === 'publishing' && (
-        <Tooltip placement="top" title="正在发布，请稍等" arrow>
+        <Tooltip placement="top" title="正在同步给所有节点" arrow>
           <div className="absolute top-[17px] right-[17px] rounded-full text-12 leading-none font-bold tracking-wide">
             <Loading size={16} />
           </div>
         </Tooltip>
       )}
       {state.status === 'failed' && (
-        <Tooltip placement="top" title="发布失败了，点击即可再次发布" arrow>
-          <div
-            className="absolute top-0 right-0 top-[15px] right-[15px] rounded-full text-red-400 text-12 leading-none font-bold tracking-wide"
-            onClick={() => republish()}
-          >
+        <Tooltip
+          placement="top"
+          title="发布失败了，当前网络没有其他节点来同步这条内容，请再加入一个新节点来互相同步"
+          arrow
+        >
+          <div className="absolute top-[15px] right-[15px] rounded-full text-red-400 text-12 leading-none font-bold tracking-wide">
             <RiErrorWarningFill className="text-20" />
           </div>
         </Tooltip>
       )}
       {state.status === 'published' && (
-        <div className="absolute top-0 right-0 top-[15px] right-[15px] rounded-full text-green-300 text-12 leading-none font-bold tracking-wide">
+        <div className="absolute top-[15px] right-[15px] rounded-full text-green-300 text-12 leading-none font-bold tracking-wide">
           <RiCheckboxCircleFill className="text-20" />
         </div>
       )}

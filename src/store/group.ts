@@ -11,6 +11,7 @@ export function createGroupStore() {
     map: <{ [key: string]: Group }>{},
     contentTrxIds: <string[]>[],
     contentMap: <{ [key: string]: ContentItem }>{},
+    justAddedContentTrxId: '',
     get isSelected() {
       return !!this.id;
     },
@@ -40,11 +41,17 @@ export function createGroupStore() {
       return group.OwnerPubKey === this.nodeInfo.node_publickey;
     },
     setId(id: string) {
+      if (this.id === id) {
+        return;
+      }
       if (!this.map[id]) {
         console.error(`groupStore.setId：id 对应的 group 不存在`);
         return;
       }
       this.id = id;
+      this.contentTrxIds = [];
+      this.contentMap = {};
+      this.justAddedContentTrxId = '';
     },
     addGroups(groups: Group[] = []) {
       for (const group of groups) {
@@ -53,6 +60,15 @@ export function createGroupStore() {
         }
         this.map[group.GroupId] = group;
       }
+    },
+    removeGroup() {
+      const removedId = this.id;
+      this.id = '';
+      this.ids = this.ids.filter((id) => id !== removedId);
+      delete this.map[removedId];
+      this.contentTrxIds = [];
+      this.contentMap = {};
+      this.justAddedContentTrxId = '';
     },
     setNodeInfo(nodeInfo: NodeInfo) {
       this.nodeInfo = nodeInfo;
@@ -63,13 +79,29 @@ export function createGroupStore() {
     getSeedFromStore(id: string) {
       return store.get(`group_seed_${id}`);
     },
+    saveCachedNewContentToStore(content: ContentItem) {
+      const cachedNewContents: any = this.getCachedNewContentsFromStore();
+      cachedNewContents.push(content);
+      store.set(`group_cached_new_contents_${this.id}`, cachedNewContents);
+    },
+    getCachedNewContentsFromStore() {
+      return (store.get(`group_cached_new_contents_${this.id}`) ||
+        []) as ContentItem[];
+    },
     addContents(contents: ContentItem[] = []) {
       for (const content of contents) {
-        if (!this.contentMap[content.TrxId]) {
+        if (this.contentMap[content.TrxId]) {
+          if (content.Publisher) {
+            this.contentMap[content.TrxId] = content;
+          }
+        } else {
           this.contentTrxIds.unshift(content.TrxId);
+          this.contentMap[content.TrxId] = content;
         }
-        this.contentMap[content.TrxId] = content;
       }
+    },
+    setJustAddedContentTrxId(trxId: string) {
+      this.justAddedContentTrxId = trxId;
     },
   };
 }

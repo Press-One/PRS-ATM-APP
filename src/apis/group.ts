@@ -43,7 +43,10 @@ export interface GroupResult {
 export interface ContentItem {
   TrxId: string;
   Publisher: string;
-  Content: string;
+  Content: {
+    type: string;
+    content: string;
+  };
   TimeStamp: number;
 }
 
@@ -88,7 +91,9 @@ export interface Trx {
   Consensus: Array<string>;
 }
 
-const BASE = `http://127.0.0.1:8002`;
+const BASE = `http://127.0.0.1:${
+  localStorage.getItem('GROUP_NODE_PORT') || 8002
+}`;
 
 export default {
   createGroup(groupName: string) {
@@ -137,7 +142,6 @@ export default {
       method: 'POST',
       base: BASE,
       body: content,
-      minPendingDuration: 500,
     }) as Promise<PostContentResult>;
   },
   fetchMyNodeInfo() {

@@ -46,9 +46,10 @@ const MyNodeInfo = observer((props: IProps) => {
         return;
       }
       await GroupApi.joinGroup(seed);
-      await sleep(200);
+      await sleep(800);
       const { groups } = await GroupApi.fetchMyGroups();
       if (groups) {
+        await sleep(2000);
         state.loading = false;
         state.done = true;
         await sleep(300);
@@ -57,12 +58,19 @@ const MyNodeInfo = observer((props: IProps) => {
         props.onClose();
         await sleep(200);
         snackbarStore.show({
-          message: '加入成功',
+          message: '已加入',
         });
       }
     } catch (err) {
       state.loading = false;
       console.log(err.message);
+      if (err.message === 'Group with same GroupId existed') {
+        snackbarStore.show({
+          message: '你已经是这个圈子的成员',
+          type: 'error',
+        });
+        return;
+      }
       snackbarStore.show({
         message: '貌似出错了',
         type: 'error',

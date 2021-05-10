@@ -4,6 +4,7 @@ import { FiChevronLeft } from 'react-icons/fi';
 import Loading from 'components/Loading';
 import GroupMenu from './GroupMenu';
 import { useStore } from 'store';
+import GroupInfoModal from './GroupInfoModal';
 
 export default observer(() => {
   const { groupStore } = useStore();
@@ -50,7 +51,7 @@ export default observer(() => {
         >
           {groupStore.group.GroupName}{' '}
         </div>
-        {state.loading && (
+        {groupStore.group.GroupStatus === 'GROUP_SYNCING' && (
           <div className="flex items-center py-1 px-3 rounded-full bg-indigo-100 text-indigo-400 text-12 leading-none ml-3 font-bold tracking-wide">
             <span className="mr-1">同步中</span> <Loading size={12} />
           </div>
@@ -59,6 +60,12 @@ export default observer(() => {
       <div className="p-2 text-24">
         <GroupMenu />
       </div>
+      <GroupInfoModal
+        open={state.showGroupInfoModal}
+        onClose={() => {
+          state.showGroupInfoModal = false;
+        }}
+      />
     </div>
   );
 });

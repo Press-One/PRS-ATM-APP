@@ -12,7 +12,6 @@ export default observer(() => {
   const state = useLocalStore(() => ({
     content: '',
     loading: false,
-    done: false,
   }));
 
   const submit = async () => {
@@ -20,9 +19,8 @@ export default observer(() => {
       return;
     }
     state.loading = true;
-    state.done = false;
     try {
-      const res = await GroupApi.postContent({
+      const payload = {
         type: 'Add',
         object: {
           type: 'Note',
@@ -33,11 +31,24 @@ export default observer(() => {
           id: groupStore.id,
           type: 'Group',
         },
-      });
-      console.log({ res });
+      };
+      const res = await GroupApi.postContent(payload);
+      groupStore.setJustAddedContentTrxId(res.trx_id);
+      await sleep(300);
+      const contents = await GroupApi.fetchContents(groupStore.id);
+      groupStore.addContents(contents || []);
+      const cachedNewContent = {
+        TrxId: res.trx_id,
+        Publisher: '',
+        Content: {
+          type: payload.object.type,
+          content: payload.object.content,
+        },
+        TimeStamp: Date.now() * 1000000,
+      };
+      groupStore.saveCachedNewContentToStore(cachedNewContent);
+      groupStore.addContents([cachedNewContent]);
       state.loading = false;
-      state.done = true;
-      await sleep(400);
       state.content = '';
     } catch (err) {
       state.loading = false;
@@ -68,7 +79,6 @@ export default observer(() => {
             'opacity-50': !state.content,
           })}
           isDoing={state.loading}
-          isDone={state.done}
           onClick={submit}
         >
           发布
@@ -78,7 +88,7 @@ export default observer(() => {
         .textarea-autosize {
           color: rgba(0, 0, 0, 0.87);
           font-size: 14px;
-          padding: 12px;
+          padding: 14px;
           font-weight: normal;
           border: 1px solid rgba(0, 0, 0, 0.1) !important;
           border-radius: 4px;
