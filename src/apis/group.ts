@@ -91,10 +91,10 @@ export interface Trx {
   Consensus: Array<string>;
 }
 
-const BASE = `http://127.0.0.1:${
-  localStorage.getItem('GROUP_NODE_PORT') || 8002
-}`;
-// const BASE = `http://103.61.39.166:8002`;
+// const BASE = `http://127.0.0.1:${
+//   localStorage.getItem('GROUP_NODE_PORT') || 8002
+// }`;
+const BASE = `http://127.0.0.1:53442`;
 
 export default {
   createGroup(groupName: string) {

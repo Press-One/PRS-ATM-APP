@@ -8,6 +8,10 @@ export default () => {
 
   // fetchUnReadContents
   React.useEffect(() => {
+    if (!groupStore.isSelected) {
+      return;
+    }
+
     let stop = false;
     const DURATION_6_SECOND = 6 * 1000;
 
@@ -43,10 +47,14 @@ export default () => {
     return () => {
       stop = true;
     };
-  }, []);
+  }, [groupStore]);
 
   // fetchMyNodeInfo
   React.useEffect(() => {
+    if (!groupStore.isSelected) {
+      return;
+    }
+
     let stop = false;
     let errorCount = 0;
     const DURATION_4_SECOND = 4 * 1000;
@@ -76,10 +84,14 @@ export default () => {
     return () => {
       stop = true;
     };
-  }, []);
+  }, [groupStore]);
 
   // fetchMyGroups
   React.useEffect(() => {
+    if (!groupStore.isSelected) {
+      return;
+    }
+
     let stop = false;
     const DURATION_3_SECOND = 3 * 1000;
 
@@ -103,5 +115,5 @@ export default () => {
     return () => {
       stop = true;
     };
-  }, []);
+  }, [groupStore]);
 };

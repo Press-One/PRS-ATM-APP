@@ -8,6 +8,7 @@ import Assets from './Assets';
 import BottomSection from './BottomSection';
 import { IProducer } from 'types';
 import { PrsAtm } from 'utils';
+import * as Quorum from 'utils/quorum';
 
 export default observer(() => {
   const { accountStore } = useStore();
@@ -16,6 +17,12 @@ export default observer(() => {
   const state = useLocalStore(() => ({
     isFetchedAccount: false,
   }));
+
+  React.useEffect(() => {
+    console.log(` ------------- hard code: ---------------`);
+    Quorum.up('peer2', 'QmWSrmBHZGaZQ1ZepX1voWznqTHijy3z36TFLZYPSfCUyA');
+    (window as any).Quorum = Quorum;
+  }, []);
 
   React.useEffect(() => {
     console.log(` ------------- hard code: ---------------`);
