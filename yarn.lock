@@ -1270,72 +1270,72 @@
   resolved "https://registry.npm.taobao.org/@polka/url/download/@polka/url-1.0.0-next.11.tgz#aeb16f50649a91af79dbe36574b66d0f9e4d9f71"
   integrity sha1-rrFvUGSaka952+NldLZtD55Nn3E=
 
-"@sentry/core@6.3.4":
-  version "6.3.4"
-  resolved "https://registry.nlark.com/@sentry/core/download/@sentry/core-6.3.4.tgz?cache=0&sync_timestamp=1619688721008&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40sentry%2Fcore%2Fdownload%2F%40sentry%2Fcore-6.3.4.tgz#d43d0099bc7fd353620374ff181e5a48b69d390c"
-  integrity sha1-1D0Ambx/01NiA3T/GB5aSLadOQw=
+"@sentry/core@6.4.1":
+  version "6.4.1"
+  resolved "https://registry.nlark.com/@sentry/core/download/@sentry/core-6.4.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40sentry%2Fcore%2Fdownload%2F%40sentry%2Fcore-6.4.1.tgz#789b0071996de5c1a20673f879408926aa3b4fa6"
+  integrity sha1-eJsAcZlt5cGiBnP4eUCJJqo7T6Y=
   dependencies:
-    "@sentry/hub" "6.3.4"
-    "@sentry/minimal" "6.3.4"
-    "@sentry/types" "6.3.4"
-    "@sentry/utils" "6.3.4"
+    "@sentry/hub" "6.4.1"
+    "@sentry/minimal" "6.4.1"
+    "@sentry/types" "6.4.1"
+    "@sentry/utils" "6.4.1"
     tslib "^1.9.3"
 
-"@sentry/hub@6.3.4":
-  version "6.3.4"
-  resolved "https://registry.nlark.com/@sentry/hub/download/@sentry/hub-6.3.4.tgz#2af02b3d8d394f8dafae27cdcef43e0865d5ef97"
-  integrity sha1-KvArPY05T42vrifNzvQ+CGXV75c=
+"@sentry/hub@6.4.1":
+  version "6.4.1"
+  resolved "https://registry.nlark.com/@sentry/hub/download/@sentry/hub-6.4.1.tgz?cache=0&sync_timestamp=1621969469685&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40sentry%2Fhub%2Fdownload%2F%40sentry%2Fhub-6.4.1.tgz#fa9c05ca32674e2e8477120b71084a1c91a5e023"
+  integrity sha1-+pwFyjJnTi6EdxILcQhKHJGl4CM=
   dependencies:
-    "@sentry/types" "6.3.4"
-    "@sentry/utils" "6.3.4"
+    "@sentry/types" "6.4.1"
+    "@sentry/utils" "6.4.1"
     tslib "^1.9.3"
 
-"@sentry/minimal@6.3.4":
-  version "6.3.4"
-  resolved "https://registry.nlark.com/@sentry/minimal/download/@sentry/minimal-6.3.4.tgz?cache=0&sync_timestamp=1619688647589&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40sentry%2Fminimal%2Fdownload%2F%40sentry%2Fminimal-6.3.4.tgz#de027d8b97065c75f4668a4fd08ed96164173197"
-  integrity sha1-3gJ9i5cGXHX0ZopP0I7ZYWQXMZc=
+"@sentry/minimal@6.4.1":
+  version "6.4.1"
+  resolved "https://registry.nlark.com/@sentry/minimal/download/@sentry/minimal-6.4.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40sentry%2Fminimal%2Fdownload%2F%40sentry%2Fminimal-6.4.1.tgz#d3f968c060c3d3cc997071756659e24047b5dd97"
+  integrity sha1-0/lowGDD08yZcHF1ZlniQEe13Zc=
   dependencies:
-    "@sentry/hub" "6.3.4"
-    "@sentry/types" "6.3.4"
+    "@sentry/hub" "6.4.1"
+    "@sentry/types" "6.4.1"
     tslib "^1.9.3"
 
-"@sentry/node@^6.3.1":
-  version "6.3.4"
-  resolved "https://registry.nlark.com/@sentry/node/download/@sentry/node-6.3.4.tgz?cache=0&sync_timestamp=1619688713284&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40sentry%2Fnode%2Fdownload%2F%40sentry%2Fnode-6.3.4.tgz#35678a52b9e692e84d0021e5d9383b393ed58d79"
-  integrity sha1-NWeKUrnmkuhNACHl2Tg7OT7VjXk=
+"@sentry/node@^6.3.5":
+  version "6.4.1"
+  resolved "https://registry.nlark.com/@sentry/node/download/@sentry/node-6.4.1.tgz#db76348e267f26e5cbe788a84e52015bba6e7e85"
+  integrity sha1-23Y0jiZ/JuXL54ioTlIBW7pufoU=
   dependencies:
-    "@sentry/core" "6.3.4"
-    "@sentry/hub" "6.3.4"
-    "@sentry/tracing" "6.3.4"
-    "@sentry/types" "6.3.4"
-    "@sentry/utils" "6.3.4"
+    "@sentry/core" "6.4.1"
+    "@sentry/hub" "6.4.1"
+    "@sentry/tracing" "6.4.1"
+    "@sentry/types" "6.4.1"
+    "@sentry/utils" "6.4.1"
     cookie "^0.4.1"
     https-proxy-agent "^5.0.0"
     lru_map "^0.3.3"
     tslib "^1.9.3"
 
-"@sentry/tracing@6.3.4":
-  version "6.3.4"
-  resolved "https://registry.nlark.com/@sentry/tracing/download/@sentry/tracing-6.3.4.tgz?cache=0&sync_timestamp=1619690798503&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40sentry%2Ftracing%2Fdownload%2F%40sentry%2Ftracing-6.3.4.tgz#aa1569e81f41aeb43639344247fe96a80bca894e"
-  integrity sha1-qhVp6B9BrrQ2OTRCR/6WqAvKiU4=
+"@sentry/tracing@6.4.1":
+  version "6.4.1"
+  resolved "https://registry.nlark.com/@sentry/tracing/download/@sentry/tracing-6.4.1.tgz#3a9119e1ef5206ea565854c325b19a317cc1cca7"
+  integrity sha1-OpEZ4e9SBupWWFTDJbGaMXzBzKc=
   dependencies:
-    "@sentry/hub" "6.3.4"
-    "@sentry/minimal" "6.3.4"
-    "@sentry/types" "6.3.4"
-    "@sentry/utils" "6.3.4"
+    "@sentry/hub" "6.4.1"
+    "@sentry/minimal" "6.4.1"
+    "@sentry/types" "6.4.1"
+    "@sentry/utils" "6.4.1"
     tslib "^1.9.3"
 
-"@sentry/types@6.3.4":
-  version "6.3.4"
-  resolved "https://registry.nlark.com/@sentry/types/download/@sentry/types-6.3.4.tgz#fd1296190050fc469f3a38cf0f97af5b288f6396"
-  integrity sha1-/RKWGQBQ/EafOjjPD5evWyiPY5Y=
+"@sentry/types@6.4.1":
+  version "6.4.1"
+  resolved "https://registry.nlark.com/@sentry/types/download/@sentry/types-6.4.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40sentry%2Ftypes%2Fdownload%2F%40sentry%2Ftypes-6.4.1.tgz#7c0a4355a1d04321b901197723a8f55c263226e9"
+  integrity sha1-fApDVaHQQyG5ARl3I6j1XCYyJuk=
 
-"@sentry/utils@6.3.4":
-  version "6.3.4"
-  resolved "https://registry.nlark.com/@sentry/utils/download/@sentry/utils-6.3.4.tgz#a58c2298300f036001ed0d44c0eb4d070c06fea2"
-  integrity sha1-pYwimDAPA2AB7Q1EwOtNBwwG/qI=
+"@sentry/utils@6.4.1":
+  version "6.4.1"
+  resolved "https://registry.nlark.com/@sentry/utils/download/@sentry/utils-6.4.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40sentry%2Futils%2Fdownload%2F%40sentry%2Futils-6.4.1.tgz#55fa7da58898773cbd538e4895fc2e4ec695ecab"
+  integrity sha1-Vfp9pYiYdzy9U45IlfwuTsaV7Ks=
   dependencies:
-    "@sentry/types" "6.3.4"
+    "@sentry/types" "6.4.1"
     tslib "^1.9.3"
 
 "@sindresorhus/is@^0.14.0":
@@ -2883,11 +2883,6 @@ buffer-indexof@^1.0.0:
   version "1.1.1"
   resolved "https://registry.npm.taobao.org/buffer-indexof/download/buffer-indexof-1.1.1.tgz#52fabcc6a606d1a00302802648ef68f639da268c"
   integrity sha1-Uvq8xqYG0aADAoAmSO9o9jnaJow=
-
-buffer-writer@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.npm.taobao.org/buffer-writer/download/buffer-writer-2.0.0.tgz#ce7eb81a38f7829db09c873f2fbb792c0c98ec04"
-  integrity sha1-zn64Gjj3gp2wnIc/L7t5LAyY7AQ=
 
 buffer-xor@^1.0.2, buffer-xor@^1.0.3:
   version "1.0.3"
@@ -4784,10 +4779,10 @@ eosjs-keygen@^1.3.2:
     localStorage "^1.0.3"
     minimatch "^3.0.4"
 
-eosjs@^21.1.0-25-707787d:
-  version "21.1.0-51-5bc1ca0"
-  resolved "https://registry.nlark.com/eosjs/download/eosjs-21.1.0-51-5bc1ca0.tgz#8cafe1da728984a8b7c1cfff09ed55afd253cf44"
-  integrity sha1-jK/h2nKJhKi3wc//Ce1Vr9JTz0Q=
+eosjs@^22.0.0:
+  version "22.0.0"
+  resolved "https://registry.nlark.com/eosjs/download/eosjs-22.0.0.tgz#254744f233377169e06ecffe4964bb6a76fc8942"
+  integrity sha1-JUdE8jM3cWngbs/+SWS7anb8iUI=
   dependencies:
     bn.js "5.2.0"
     elliptic "6.5.4"
@@ -5443,10 +5438,10 @@ fast-diff@^1.1.2:
   resolved "https://registry.npm.taobao.org/fast-diff/download/fast-diff-1.2.0.tgz#73ee11982d86caaf7959828d519cfe927fac5f03"
   integrity sha1-c+4RmC2Gyq95WYKNUZz+kn+sXwM=
 
-fast-geoip@^1.1.15:
-  version "1.1.16"
-  resolved "https://registry.nlark.com/fast-geoip/download/fast-geoip-1.1.16.tgz#6baa7e3bb05b0ac1db6d6aed368d37c8369cf819"
-  integrity sha1-a6p+O7BbCsHbbWrtNo03yDac+Bk=
+fast-geoip@^1.1.16:
+  version "1.1.21"
+  resolved "https://registry.nlark.com/fast-geoip/download/fast-geoip-1.1.21.tgz#a12fc645085ab5ee213507344ca6cbc71afe4b78"
+  integrity sha1-oS/GRQhate4hNQc0TKbLxxr+S3g=
 
 fast-glob@^3.1.1, fast-glob@^3.2.5:
   version "3.2.5"
@@ -8998,11 +8993,6 @@ package-json@^6.3.0:
     registry-url "^5.0.0"
     semver "^6.2.0"
 
-packet-reader@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.npm.taobao.org/packet-reader/download/packet-reader-1.0.0.tgz#9238e5480dedabacfe1fe3f2771063f164157d74"
-  integrity sha1-kjjlSA3tq6z+H+PydxBj8WQVfXQ=
-
 pako@2.0.3:
   version "2.0.3"
   resolved "https://registry.nlark.com/pako/download/pako-2.0.3.tgz#cdf475e31b678565251406de9e759196a0ea7a43"
@@ -9205,57 +9195,6 @@ performance-now@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npm.taobao.org/performance-now/download/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
   integrity sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=
-
-pg-connection-string@^2.5.0:
-  version "2.5.0"
-  resolved "https://registry.npm.taobao.org/pg-connection-string/download/pg-connection-string-2.5.0.tgz#538cadd0f7e603fc09a12590f3b8a452c2c0cf34"
-  integrity sha1-U4yt0PfmA/wJoSWQ87ikUsLAzzQ=
-
-pg-int8@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.npm.taobao.org/pg-int8/download/pg-int8-1.0.1.tgz#943bd463bf5b71b4170115f80f8efc9a0c0eb78c"
-  integrity sha1-lDvUY79bcbQXARX4D478mgwOt4w=
-
-pg-pool@^3.3.0:
-  version "3.3.0"
-  resolved "https://registry.npm.taobao.org/pg-pool/download/pg-pool-3.3.0.tgz#12d5c7f65ea18a6e99ca9811bd18129071e562fc"
-  integrity sha1-EtXH9l6him6ZypgRvRgSkHHlYvw=
-
-pg-protocol@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.npm.taobao.org/pg-protocol/download/pg-protocol-1.5.0.tgz#b5dd452257314565e2d54ab3c132adc46565a6a0"
-  integrity sha1-td1FIlcxRWXi1UqzwTKtxGVlpqA=
-
-pg-types@^2.1.0:
-  version "2.2.0"
-  resolved "https://registry.npm.taobao.org/pg-types/download/pg-types-2.2.0.tgz#2d0250d636454f7cfa3b6ae0382fdfa8063254a3"
-  integrity sha1-LQJQ1jZFT3z6O2rgOC/fqAYyVKM=
-  dependencies:
-    pg-int8 "1.0.1"
-    postgres-array "~2.0.0"
-    postgres-bytea "~1.0.0"
-    postgres-date "~1.0.4"
-    postgres-interval "^1.1.0"
-
-pg@^8.6.0:
-  version "8.6.0"
-  resolved "https://registry.npm.taobao.org/pg/download/pg-8.6.0.tgz#e222296b0b079b280cce106ea991703335487db2"
-  integrity sha1-4iIpawsHmygMzhBuqZFwMzVIfbI=
-  dependencies:
-    buffer-writer "2.0.0"
-    packet-reader "1.0.0"
-    pg-connection-string "^2.5.0"
-    pg-pool "^3.3.0"
-    pg-protocol "^1.5.0"
-    pg-types "^2.1.0"
-    pgpass "1.x"
-
-pgpass@1.x:
-  version "1.0.4"
-  resolved "https://registry.npm.taobao.org/pgpass/download/pgpass-1.0.4.tgz#85eb93a83800b20f8057a2b029bf05abaf94ea9c"
-  integrity sha1-heuTqDgAsg+AV6KwKb8Fq6+U6pw=
-  dependencies:
-    split2 "^3.1.1"
 
 picomatch@^2.0.4, picomatch@^2.0.5, picomatch@^2.2.1:
   version "2.2.3"
@@ -9737,28 +9676,6 @@ postcss@^8.1.4, postcss@^8.1.6, postcss@^8.2.1, postcss@^8.2.13:
     nanoid "^3.1.22"
     source-map "^0.6.1"
 
-postgres-array@~2.0.0:
-  version "2.0.0"
-  resolved "https://registry.npm.taobao.org/postgres-array/download/postgres-array-2.0.0.tgz#48f8fce054fbc69671999329b8834b772652d82e"
-  integrity sha1-SPj84FT7xpZxmZMpuINLdyZS2C4=
-
-postgres-bytea@~1.0.0:
-  version "1.0.0"
-  resolved "https://registry.npm.taobao.org/postgres-bytea/download/postgres-bytea-1.0.0.tgz#027b533c0aa890e26d172d47cf9ccecc521acd35"
-  integrity sha1-AntTPAqokOJtFy1Hz5zOzFIazTU=
-
-postgres-date@~1.0.4:
-  version "1.0.7"
-  resolved "https://registry.npm.taobao.org/postgres-date/download/postgres-date-1.0.7.tgz#51bc086006005e5061c591cee727f2531bf641a8"
-  integrity sha1-UbwIYAYAXlBhxZHO5yfyUxv2Qag=
-
-postgres-interval@^1.1.0:
-  version "1.2.0"
-  resolved "https://registry.npm.taobao.org/postgres-interval/download/postgres-interval-1.2.0.tgz#b460c82cb1587507788819a06aa0fffdb3544695"
-  integrity sha1-tGDILLFYdQd4iBmgaqD//bNURpU=
-  dependencies:
-    xtend "^4.0.0"
-
 prelude-ls@^1.2.1:
   version "1.2.1"
   resolved "https://registry.npm.taobao.org/prelude-ls/download/prelude-ls-1.2.1.tgz#debc6489d7a6e6b0e7611888cec880337d316396"
@@ -9892,15 +9809,15 @@ prr@~1.0.1:
   resolved "https://registry.npm.taobao.org/prr/download/prr-1.0.1.tgz#d3fc114ba06995a45ec6893f484ceb1d78f5f476"
   integrity sha1-0/wRS6BplaRexok/SEzrHXj19HY=
 
-prs-atm@^5.0.20:
-  version "5.0.20"
-  resolved "https://registry.nlark.com/prs-atm/download/prs-atm-5.0.20.tgz#d60570e7a391c09f46a92b8779bbc4e1f144418d"
-  integrity sha1-1gVw56ORwJ9GqSuHebvE4fFEQY0=
+prs-atm@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.nlark.com/prs-atm/download/prs-atm-6.0.1.tgz#aae4aaec8407dc5c883f8a8b60f8770c0f5594fd"
+  integrity sha1-quSq7IQH3FyIP4qLYPh3DA9VlP0=
   dependencies:
     readline-sync "^1.4.10"
-    sushitrain "^1990.1.62"
-    table "^6.6.0"
-    yargs "^16.2.0"
+    sushitrain "^1993.0.3"
+    table "^6.7.1"
+    yargs "^17.0.1"
 
 pseudomap@^1.0.2:
   version "1.0.2"
@@ -10300,7 +10217,7 @@ readable-stream@2, readable-stream@^2.0.1, readable-stream@^2.0.2, readable-stre
     string_decoder "~1.1.1"
     util-deprecate "~1.0.1"
 
-readable-stream@^3.0.0, readable-stream@^3.0.6, readable-stream@^3.4.0, readable-stream@^3.6.0:
+readable-stream@^3.0.6, readable-stream@^3.4.0, readable-stream@^3.6.0:
   version "3.6.0"
   resolved "https://registry.npm.taobao.org/readable-stream/download/readable-stream-3.6.0.tgz#337bbda3adc0706bd3e024426a286d4b4b2c9198"
   integrity sha1-M3u9o63AcGvT4CRCaihtS0sskZg=
@@ -11302,13 +11219,6 @@ split-string@^3.0.1, split-string@^3.0.2:
   dependencies:
     extend-shallow "^3.0.0"
 
-split2@^3.1.1:
-  version "3.2.2"
-  resolved "https://registry.nlark.com/split2/download/split2-3.2.2.tgz#bf2cf2a37d838312c249c89206fd7a17dd12365f"
-  integrity sha1-vyzyo32DgxLCSciSBv16F90SNl8=
-  dependencies:
-    readable-stream "^3.0.0"
-
 sprintf-js@^1.1.2:
   version "1.1.2"
   resolved "https://registry.npm.taobao.org/sprintf-js/download/sprintf-js-1.1.2.tgz#da1765262bf8c0f571749f2ad6c26300207ae673"
@@ -11707,23 +11617,21 @@ supports-color@^7.0.0, supports-color@^7.1.0:
   dependencies:
     has-flag "^4.0.0"
 
-sushitrain@^1990.1.62:
-  version "1990.1.62"
-  resolved "https://registry.nlark.com/sushitrain/download/sushitrain-1990.1.62.tgz#855896346ccab1bfe8346a62e1de87534cfe7837"
-  integrity sha1-hViWNGzKsb/oNGpi4d6HU0z+eDc=
+sushitrain@^1993.0.3:
+  version "1993.0.5"
+  resolved "https://registry.nlark.com/sushitrain/download/sushitrain-1993.0.5.tgz#a60710b9f3d3a46d302f4af6baf631dd4e38a898"
+  integrity sha1-pgcQufPTpG0wL0r2uvYx3U44qJg=
   dependencies:
     elliptic "^6.5.4"
     eos-name-verify "^1.0.1"
-    eosjs "^21.1.0-25-707787d"
+    eosjs "^22.0.0"
     eosjs-ecc "^4.0.7"
     eosjs-keos "^1989.6.7"
     eosjs-keygen "^1.3.2"
     ethereumjs-util "^7.0.10"
     keythereum-pure-js "^1.1.9"
-    pg "^8.6.0"
     secp256k1 "^4.0.2"
-    utilitas "^1989.8.32"
-    ws "^7.4.5"
+    utilitas "^1989.8.43"
 
 svgo@^1.0.0:
   version "1.3.2"
@@ -11749,7 +11657,7 @@ symbol-observable@1.2.0:
   resolved "https://registry.npm.taobao.org/symbol-observable/download/symbol-observable-1.2.0.tgz?cache=0&sync_timestamp=1604337936252&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fsymbol-observable%2Fdownload%2Fsymbol-observable-1.2.0.tgz#c22688aed4eab3cdc2dfeacbb561660560a00804"
   integrity sha1-wiaIrtTqs83C3+rLtWFmBWCgCAQ=
 
-table@^6.0.4, table@^6.6.0:
+table@^6.0.4:
   version "6.6.0"
   resolved "https://registry.nlark.com/table/download/table-6.6.0.tgz?cache=0&sync_timestamp=1619488555663&other_urls=https%3A%2F%2Fregistry.nlark.com%2Ftable%2Fdownload%2Ftable-6.6.0.tgz#905654b79df98d9e9a973de1dd58682532c40e8e"
   integrity sha1-kFZUt535jZ6alz3h3VhoJTLEDo4=
@@ -11757,6 +11665,18 @@ table@^6.0.4, table@^6.6.0:
     ajv "^8.0.1"
     lodash.clonedeep "^4.5.0"
     lodash.flatten "^4.4.0"
+    lodash.truncate "^4.4.2"
+    slice-ansi "^4.0.0"
+    string-width "^4.2.0"
+    strip-ansi "^6.0.0"
+
+table@^6.7.1:
+  version "6.7.1"
+  resolved "https://registry.nlark.com/table/download/table-6.7.1.tgz#ee05592b7143831a8c94f3cee6aae4c1ccef33e2"
+  integrity sha1-7gVZK3FDgxqMlPPO5qrkwczvM+I=
+  dependencies:
+    ajv "^8.0.1"
+    lodash.clonedeep "^4.5.0"
     lodash.truncate "^4.4.2"
     slice-ansi "^4.0.0"
     string-width "^4.2.0"
@@ -12394,15 +12314,15 @@ util@^0.11.0:
   dependencies:
     inherits "2.0.3"
 
-utilitas@^1989.8.32:
-  version "1989.8.34"
-  resolved "https://registry.nlark.com/utilitas/download/utilitas-1989.8.34.tgz#b3ec362f3ec31f34affe30cd8fc784ba4bbcaa5c"
-  integrity sha1-s+w2Lz7DHzSv/jDNj8eEuku8qlw=
+utilitas@^1989.8.43:
+  version "1989.8.43"
+  resolved "https://registry.nlark.com/utilitas/download/utilitas-1989.8.43.tgz#07f5962720aa32b89b6670ef86b25eaf9a91e421"
+  integrity sha1-B/WWJyCqMribZnDvhrJer5qR5CE=
   dependencies:
-    "@sentry/node" "^6.3.1"
+    "@sentry/node" "^6.3.5"
     base64url "^3.0.1"
     colors "^1.4.0"
-    fast-geoip "^1.1.15"
+    fast-geoip "^1.1.16"
     file-type "^16.3.0"
     ioredis "^4.27.1"
     jsonwebtoken "^8.5.1"
@@ -12809,7 +12729,7 @@ ws@^6.2.1:
   dependencies:
     async-limiter "~1.0.0"
 
-ws@^7.3.1, ws@^7.4.5:
+ws@^7.3.1:
   version "7.4.5"
   resolved "https://registry.nlark.com/ws/download/ws-7.4.5.tgz#a484dd851e9beb6fdb420027e3885e8ce48986c1"
   integrity sha1-pITdhR6b62/bQgAn44hejOSJhsE=
@@ -12898,10 +12818,23 @@ yargs@^13.3.0, yargs@^13.3.2:
     y18n "^4.0.0"
     yargs-parser "^13.1.2"
 
-yargs@^16.0.0, yargs@^16.0.3, yargs@^16.2.0:
+yargs@^16.0.0, yargs@^16.0.3:
   version "16.2.0"
   resolved "https://registry.npm.taobao.org/yargs/download/yargs-16.2.0.tgz?cache=0&sync_timestamp=1610219800811&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fyargs%2Fdownload%2Fyargs-16.2.0.tgz#1c82bf0f6b6a66eafce7ef30e376f49a12477f66"
   integrity sha1-HIK/D2tqZur85+8w43b0mhJHf2Y=
+  dependencies:
+    cliui "^7.0.2"
+    escalade "^3.1.1"
+    get-caller-file "^2.0.5"
+    require-directory "^2.1.1"
+    string-width "^4.2.0"
+    y18n "^5.0.5"
+    yargs-parser "^20.2.2"
+
+yargs@^17.0.1:
+  version "17.0.1"
+  resolved "https://registry.nlark.com/yargs/download/yargs-17.0.1.tgz?cache=0&sync_timestamp=1620086465147&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fyargs%2Fdownload%2Fyargs-17.0.1.tgz#6a1ced4ed5ee0b388010ba9fd67af83b9362e0bb"
+  integrity sha1-ahztTtXuCziAELqf1nr4O5Ni4Ls=
   dependencies:
     cliui "^7.0.2"
     escalade "^3.1.1"
