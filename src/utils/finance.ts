@@ -122,10 +122,7 @@ const getDecimalsFromAmount = (amount: string) => {
 const replaceMixinDomain = (url: string) => {
   return url
     .replace('https://mixin.one', 'https://mixin-www.zeromesh.net')
-    .replace(
-      'https://prs-bp-cn1.xue.cn/api/finance',
-      'https://mixin-www.zeromesh.net'
-    );
+    .replace(/(.*)(?=\/pay)/, 'https://mixin-www.zeromesh.net');
 };
 
 const largerEqMinNumber = (amount: string, minNumber?: string) => {
