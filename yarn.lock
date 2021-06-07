@@ -9809,13 +9809,13 @@ prr@~1.0.1:
   resolved "https://registry.npm.taobao.org/prr/download/prr-1.0.1.tgz#d3fc114ba06995a45ec6893f484ceb1d78f5f476"
   integrity sha1-0/wRS6BplaRexok/SEzrHXj19HY=
 
-prs-atm@^6.0.1:
-  version "6.0.1"
-  resolved "https://registry.nlark.com/prs-atm/download/prs-atm-6.0.1.tgz#aae4aaec8407dc5c883f8a8b60f8770c0f5594fd"
-  integrity sha1-quSq7IQH3FyIP4qLYPh3DA9VlP0=
+prs-atm@^6.1.3:
+  version "6.1.3"
+  resolved "https://registry.nlark.com/prs-atm/download/prs-atm-6.1.3.tgz#8873b3c0b6719f4f04ec6f2a8908073291d7318b"
+  integrity sha1-iHOzwLZxn08E7G8qiQgHMpHXMYs=
   dependencies:
     readline-sync "^1.4.10"
-    sushitrain "^1993.0.3"
+    sushitrain "^1993.1.2"
     table "^6.7.1"
     yargs "^17.0.1"
 
@@ -11617,10 +11617,10 @@ supports-color@^7.0.0, supports-color@^7.1.0:
   dependencies:
     has-flag "^4.0.0"
 
-sushitrain@^1993.0.3:
-  version "1993.0.5"
-  resolved "https://registry.nlark.com/sushitrain/download/sushitrain-1993.0.5.tgz#a60710b9f3d3a46d302f4af6baf631dd4e38a898"
-  integrity sha1-pgcQufPTpG0wL0r2uvYx3U44qJg=
+sushitrain@^1993.1.2:
+  version "1993.1.2"
+  resolved "https://registry.nlark.com/sushitrain/download/sushitrain-1993.1.2.tgz#43f9fc88cb2c151918896748fa052c585b28d61e"
+  integrity sha1-Q/n8iMssFRkYiWdI+gUsWFso1h4=
   dependencies:
     elliptic "^6.5.4"
     eos-name-verify "^1.0.1"
@@ -11657,20 +11657,7 @@ symbol-observable@1.2.0:
   resolved "https://registry.npm.taobao.org/symbol-observable/download/symbol-observable-1.2.0.tgz?cache=0&sync_timestamp=1604337936252&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fsymbol-observable%2Fdownload%2Fsymbol-observable-1.2.0.tgz#c22688aed4eab3cdc2dfeacbb561660560a00804"
   integrity sha1-wiaIrtTqs83C3+rLtWFmBWCgCAQ=
 
-table@^6.0.4:
-  version "6.6.0"
-  resolved "https://registry.nlark.com/table/download/table-6.6.0.tgz?cache=0&sync_timestamp=1619488555663&other_urls=https%3A%2F%2Fregistry.nlark.com%2Ftable%2Fdownload%2Ftable-6.6.0.tgz#905654b79df98d9e9a973de1dd58682532c40e8e"
-  integrity sha1-kFZUt535jZ6alz3h3VhoJTLEDo4=
-  dependencies:
-    ajv "^8.0.1"
-    lodash.clonedeep "^4.5.0"
-    lodash.flatten "^4.4.0"
-    lodash.truncate "^4.4.2"
-    slice-ansi "^4.0.0"
-    string-width "^4.2.0"
-    strip-ansi "^6.0.0"
-
-table@^6.7.1:
+table@^6.0.4, table@^6.7.1:
   version "6.7.1"
   resolved "https://registry.nlark.com/table/download/table-6.7.1.tgz#ee05592b7143831a8c94f3cee6aae4c1ccef33e2"
   integrity sha1-7gVZK3FDgxqMlPPO5qrkwczvM+I=

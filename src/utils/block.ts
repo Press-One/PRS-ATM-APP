@@ -1,7 +1,7 @@
 import { shell } from 'electron';
 
 const open = (blockNum: number) => {
-  shell.openExternal(`https://press.one/blockchain/blocks/${blockNum}`);
+  shell.openExternal(`https://press.one/explorer/blocks/${blockNum}`);
 };
 
 export default {

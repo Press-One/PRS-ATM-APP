@@ -1,5 +1,5 @@
 {
-  "version": "1.0.25",
+  "version": "1.0.26",
   "name": "prs-atm-app",
   "productName": "PRS ATM",
   "description": "PRS ATM Desktop App",
@@ -21,7 +21,7 @@
     "package:release:mac": "env-cmd electron-builder build --mac --publish never",
     "package:release:win": "env-cmd electron-builder build --win --publish never",
     "package:release:linux": "env-cmd electron-builder build --linux --publish never",
-    "package:release:win32": "env-cmd electron-builder build --win --ia32 -c.nsis.artifactName=\"PRS-ATM-1.0.25-ia32.exe\" --publish never",
+    "package:release:win32": "env-cmd electron-builder build --win --ia32 -c.nsis.artifactName=\"PRS-ATM-1.0.26-ia32.exe\" --publish never",
     "postinstall": "yarn build && electron-builder install-app-deps && yarn cross-env NODE_ENV=development webpack --config ./.erb/configs/webpack.config.renderer.dev.dll.babel.js && opencollective-postinstall && yarn-deduplicate yarn.lock",
     "start": "node -r @babel/register ./.erb/scripts/CheckPortInUse.js && concurrently \"yarn start:main\" \"cross-env yarn start:renderer\"",
     "start:main": "cross-env NODE_ENV=development electron .",
@@ -46,7 +46,7 @@
     "appId": "one.press.atm",
     "artifactName": "PRS-ATM-${version}.${ext}",
     "releaseInfo": {
-      "releaseNotes": "1.优化网络加载速度;2.修复支付二维码失效的问题"
+      "releaseNotes": "1.修复 Mixin 账号绑定的问题;2.升级底层 API"
     },
     "files": [
       "dist/",
@@ -212,7 +212,7 @@
     "postcss": "^8.2.13",
     "postcss-loader": "^4.2.0",
     "prettier": "^2.0.5",
-    "prs-atm": "^6.0.1",
+    "prs-atm": "^6.1.3",
     "react-test-renderer": "^17.0.1",
     "regenerator-runtime": "^0.13.5",
     "rimraf": "^3.0.0",
