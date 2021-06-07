@@ -159,6 +159,9 @@ export default observer(() => {
 
   React.useEffect(() => {
     const initLoad = async () => {
+      if (state.pageLoading) {
+        return;
+      }
       state.pageLoading = true;
       await Promise.all([fetchVotes(), fetchProducers()]);
       state.pageLoading = false;
