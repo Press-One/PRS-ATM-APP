@@ -60,7 +60,7 @@ export interface IAccount {
   ram_usage: number;
   refund_request: any;
   self_delegated_bandwidth: any;
-  total_resources: {
+  self_delegated_bandwidth: {
     cpu_weight: string;
     net_weight: string;
     owner: string;
@@ -201,7 +201,7 @@ export function createAccountStore() {
     },
 
     updateAccount(account: IAccount) {
-      this.account.total_resources = account.total_resources;
+      this.account.self_delegated_bandwidth = account.self_delegated_bandwidth;
       this.account.producer = account.producer;
       store.set('account', this.account);
     },

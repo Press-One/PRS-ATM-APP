@@ -208,10 +208,14 @@ export default observer((props: IProps) => {
           </div>
         )}
         {!isDeveloper && (
-          <div className="mt-1">cpu：{account.total_resources.cpu_weight}</div>
+          <div className="mt-1">
+            cpu：{account.self_delegated_bandwidth.cpu_weight}
+          </div>
         )}
         {!isDeveloper && (
-          <div className="mt-1">net：{account.total_resources.net_weight}</div>
+          <div className="mt-1">
+            net：{account.self_delegated_bandwidth.net_weight}
+          </div>
         )}
         {!isDeveloper && !isEmpty(producer) && (
           <div>

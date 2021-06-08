@@ -241,8 +241,8 @@ export default observer(() => {
       balanceAmount: Finance.toString(
         subtract(
           add(
-            bignumber(account.total_resources.cpu_weight.replace(' SRP', '')),
-            bignumber(account.total_resources.net_weight.replace(' SRP', ''))
+            bignumber(account.self_delegated_bandwidth.cpu_weight.replace(' SRP', '')),
+            bignumber(account.self_delegated_bandwidth.net_weight.replace(' SRP', ''))
           ),
           bignumber(4)
         )
