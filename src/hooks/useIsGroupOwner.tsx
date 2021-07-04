@@ -9,5 +9,5 @@ export default (group: Group) => {
     return false;
   }
 
-  return group.OwnerPubKey === nodeStore.nodeInfo.node_publickey;
+  return group.OwnerPubKey === nodeStore.info.node_publickey;
 };

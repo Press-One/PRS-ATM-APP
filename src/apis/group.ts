@@ -120,7 +120,7 @@ interface Blocked {
 }
 
 const getBase = () =>
-  `http://127.0.0.1:${(window as any).store.nodeStore.nodePort}`;
+  `http://127.0.0.1:${(window as any).store.nodeStore.port}`;
 
 export default {
   createGroup(groupName: string) {
@@ -158,10 +158,11 @@ export default {
       body: { group_id: groupId },
     }) as Promise<GroupResult>;
   },
-  fetchContents(groupId: string) {
+  fetchContents(groupId: string, options: any = {}) {
     return request(`/api/v1/group/content?groupId=${groupId}`, {
       method: 'GET',
       base: getBase(),
+      ...options,
     }) as Promise<null | Array<ContentItem>>;
   },
   postContent(content: ContentPayload) {

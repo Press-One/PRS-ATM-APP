@@ -14,8 +14,8 @@ export enum Status {
 
 const store = new Store();
 
-const STORE_LAST_GROUP_READ_CONTENT_TIME_STAMP_MAP =
-  'LAST_GROUP_READ_CONTENT_TIME_STAMP_MAP';
+const STORE_GROUPS_LAST_CONTENT_TIME_STAMP_MAP =
+  'GROUPS_LAST_CONTENT_TIME_STAMP_MAP';
 
 export function createGroupStore() {
   return {
@@ -31,16 +31,14 @@ export function createGroupStore() {
 
     justAddedContentTrxId: '',
 
-    unReadContents: <ContentItem[]>[],
-
     statusMap: <{ [key: string]: Status }>{},
 
-    // for front group
-    lastReadContentTimeStamps: <number[]>[],
+    // only for current group
+    currentGroupLastContentTimeStamps: <number[]>[],
 
-    // for background groups
-    lastReadContentTimeStampMap: (store.get(
-      STORE_LAST_GROUP_READ_CONTENT_TIME_STAMP_MAP
+    // for all groups
+    groupsLastContentTimeStampMap: (store.get(
+      STORE_GROUPS_LAST_CONTENT_TIME_STAMP_MAP
     ) || {}) as LastReadContentTrxIdMap,
 
     unReadCountMap: {} as any,
@@ -67,14 +65,6 @@ export function createGroupStore() {
 
     get groupSeed() {
       return this.getSeedFromStore(this.id);
-    },
-
-    get unReadContentTrxIds() {
-      return this.unReadContents.map((content) => content.TrxId);
-    },
-
-    get hasUnreadContents() {
-      return this.unReadContents.length > 0;
     },
 
     setId(id: string) {
@@ -128,8 +118,7 @@ export function createGroupStore() {
       this.contentTrxIds = [];
       this.contentMap = {};
       this.justAddedContentTrxId = '';
-      this.lastReadContentTimeStamps = [];
-      this.unReadContents = [];
+      this.currentGroupLastContentTimeStamps = [];
     },
 
     saveSeedToStore(group: CreateGroupsResult) {
@@ -155,6 +144,7 @@ export function createGroupStore() {
       const lastContent = this.contents[0];
       if (lastContent) {
         this.setLastReadContentTimeStamp(this.id, lastContent.TimeStamp);
+        this.addCurrentGroupLastContentTimeStamp(lastContent.TimeStamp);
         this.updateUnReadCountMap(this.id, 0);
       }
     },
@@ -163,22 +153,8 @@ export function createGroupStore() {
       this.justAddedContentTrxId = trxId;
     },
 
-    addLastReadContentTimeStamps(timestamp: number) {
-      this.lastReadContentTimeStamps.push(timestamp);
-    },
-
-    addUnreadContents(contents: ContentItem[] = []) {
-      for (const content of contents) {
-        this.unReadContents.push(content);
-      }
-    },
-
-    mergeUnReadContents() {
-      if (this.contents.length > 0) {
-        this.addLastReadContentTimeStamps(this.contents[0].TimeStamp);
-      }
-      this.addContents(this.unReadContents);
-      this.unReadContents = [];
+    addCurrentGroupLastContentTimeStamp(timestamp: number) {
+      this.currentGroupLastContentTimeStamps.push(timestamp);
     },
 
     getContentStatus(content: ContentItem) {
@@ -199,21 +175,29 @@ export function createGroupStore() {
       this.statusMap[txId] = Status.FAILED;
     },
 
-    saveCachedNewContentToStore(key: string, content: ContentItem) {
-      const cachedNewContents: any = this.getCachedNewContentsFromStore(key);
+    saveCachedNewContent(key: string, content: ContentItem) {
+      const cachedNewContents: any = this.getCachedNewContents(key);
       cachedNewContents.push(content);
       store.set(key, cachedNewContents);
     },
 
-    getCachedNewContentsFromStore(key: string) {
+    removeCachedNewContent(key: string, txId: string) {
+      const cachedNewContents: ContentItem[] = this.getCachedNewContents(key);
+      store.set(
+        key,
+        cachedNewContents.filter((content) => content.TrxId !== txId)
+      );
+    },
+
+    getCachedNewContents(key: string) {
       return (store.get(key) || []) as ContentItem[];
     },
 
     setLastReadContentTimeStamp(groupId: string, timeStamp: number) {
-      this.lastReadContentTimeStampMap[groupId] = timeStamp;
+      this.groupsLastContentTimeStampMap[groupId] = timeStamp;
       store.set(
-        STORE_LAST_GROUP_READ_CONTENT_TIME_STAMP_MAP,
-        this.lastReadContentTimeStampMap
+        STORE_GROUPS_LAST_CONTENT_TIME_STAMP_MAP,
+        this.groupsLastContentTimeStampMap
       );
     },
 
@@ -223,8 +207,8 @@ export function createGroupStore() {
 
     initLastReadContentTimeStamps() {
       if (this.unReadCountMap[this.id]) {
-        this.lastReadContentTimeStamps = [
-          this.lastReadContentTimeStampMap[this.id] || 0,
+        this.currentGroupLastContentTimeStamps = [
+          this.groupsLastContentTimeStampMap[this.id] || 0,
         ];
       }
     },

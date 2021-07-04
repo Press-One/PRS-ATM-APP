@@ -119,7 +119,7 @@ export default observer((props: { content: ContentItem }) => {
     }
   };
 
-  const Publisher = content.Publisher || nodeStore.nodeInfo.user_id;
+  const Publisher = content.Publisher || nodeStore.info.user_id;
 
   return (
     <div className="rounded-12 bg-white mt-3 px-8 py-6 w-[600px] box-border relative group">
@@ -214,7 +214,7 @@ export default observer((props: { content: ContentItem }) => {
       {status === Status.PUBLISHED &&
         !state.showSuccessChecker &&
         isCurrentGroupOwner &&
-        nodeStore.nodeInfo.user_id !== content.Publisher && (
+        nodeStore.info.user_id !== content.Publisher && (
           <div>
             <div
               className="absolute top-[8px] right-[8px] text-gray-9b p-2 opacity-90"

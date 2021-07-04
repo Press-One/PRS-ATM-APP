@@ -5,7 +5,7 @@ import { useStore } from 'store';
 import { ContentItem } from 'apis/group';
 
 export default observer(() => {
-  const { groupStore } = useStore();
+  const { groupStore, nodeStore } = useStore();
   const { contents } = groupStore;
   const lastContent = contents[0];
   return (
@@ -13,7 +13,9 @@ export default observer(() => {
       {contents.map((content: ContentItem) => (
         <div key={content.TrxId}>
           {lastContent !== content &&
-            groupStore.lastReadContentTimeStamps.includes(
+            lastContent.Publisher &&
+            lastContent.Publisher !== nodeStore.info.user_id &&
+            groupStore.currentGroupLastContentTimeStamps.includes(
               content.TimeStamp
             ) && (
               <div className="w-full text-12 text-center py-6 pb-3 text-gray-400">
