@@ -15,6 +15,7 @@ import { UpParam } from 'utils/quorum';
 import UsePolling from './usePolling';
 import UseAppBadgeCount from './useAppBadgeCount';
 import useGroupStoreKey from 'hooks/useGroupStoreKey';
+import Welcome from './Welcome';
 
 export default observer(() => {
   const { groupStore, nodeStore, authStore } = useStore();
@@ -22,6 +23,8 @@ export default observer(() => {
   const state = useLocalStore(() => ({
     isFetched: false,
     loading: false,
+    showGroupEditorModal: false,
+    showJoinGroupModal: false,
   }));
 
   UsePolling();
@@ -35,7 +38,7 @@ export default observer(() => {
       state.loading = true;
       try {
         const contents = await GroupApi.fetchContents(groupStore.id, {
-          minPendingDuration: 300,
+          minPendingDuration: 200,
         });
         groupStore.addContents(contents || []);
         groupStore.addContents(
@@ -113,7 +116,7 @@ export default observer(() => {
           <div className="h-screen">
             <Header />
             {state.loading && (
-              <div className="pt-48">
+              <div className="pt-56">
                 <Loading />
               </div>
             )}
@@ -132,9 +135,9 @@ export default observer(() => {
                   )}
                   <Contents />
                 </div>
+                <BackToTop elementSelector=".scroll-view" />
               </div>
             )}
-            <BackToTop elementSelector=".scroll-view" />
             <style jsx>{`
               .scroll-view {
                 height: calc(100vh - 52px);
@@ -144,9 +147,7 @@ export default observer(() => {
         )}
         {!groupStore.isSelected && (
           <div className="h-screen flex items-center justify-center tracking-widest text-18 text-gray-9b">
-            {groupStore.groups.length > 0
-              ? '打开一个群组看看'
-              : '创建或加入一个群组试试'}
+            {groupStore.groups.length === 0 && <Welcome />}
           </div>
         )}
       </div>

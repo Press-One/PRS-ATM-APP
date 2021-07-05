@@ -22,7 +22,7 @@ const ModeSelector = observer((props: IProps) => {
 
   const changeCustomNodePort = async () => {
     snackbarStore.show({
-      message: '成功指定端口，即将重启',
+      message: '成功指定端口',
     });
     await sleep(1500);
     nodeStore.setCustomPort(Number(state.port));

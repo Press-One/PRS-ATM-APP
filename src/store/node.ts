@@ -1,12 +1,12 @@
-import { NodeInfo } from 'apis/group';
+import { INodeInfo } from 'apis/group';
 import { ProcessStatus } from 'utils/quorum';
 import cryptoRandomString from 'crypto-random-string';
 import { isDevelopment } from 'utils/env';
+import CustomPort from 'utils/storages/customPort';
 
 const STORAGE_CUSTOM_GROUP_NODE_PORT_KEY = 'CUSTOM_GROUP_NODE_PORT';
 const STORAGE_GROUP_BOOTSTRAP_ID_KEY = 'GROUP_BOOTSTRAP_ID';
 const STORAGE_PEER_NAME_KEY = 'PEER_NAME';
-const STORAGE_CAN_USE_CUSTOM_PORT = 'CUSTOM_PORT_ENABLED';
 
 export function createNodeStore() {
   return {
@@ -20,10 +20,9 @@ export function createNodeStore() {
 
     status: <ProcessStatus>{},
 
-    info: {} as NodeInfo,
+    info: {} as INodeInfo,
 
-    canUseCustomPort:
-      !!localStorage.getItem(STORAGE_CAN_USE_CUSTOM_PORT) || isDevelopment,
+    canUseCustomPort: CustomPort.enabled() || isDevelopment,
 
     get disconnected() {
       return false;
@@ -80,7 +79,7 @@ export function createNodeStore() {
       localStorage.removeItem(STORAGE_CUSTOM_GROUP_NODE_PORT_KEY);
     },
 
-    setInfo(info: NodeInfo) {
+    setInfo(info: INodeInfo) {
       this.info = info;
     },
 

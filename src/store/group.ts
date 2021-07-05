@@ -1,4 +1,4 @@
-import { Group, CreateGroupsResult, ContentItem } from 'apis/group';
+import { IGroup, ICreateGroupsResult, IContentItem } from 'apis/group';
 import Store from 'electron-store';
 import moment from 'moment';
 
@@ -23,11 +23,11 @@ export function createGroupStore() {
 
     ids: <string[]>[],
 
-    map: <{ [key: string]: Group }>{},
+    map: <{ [key: string]: IGroup }>{},
 
     contentTrxIds: <string[]>[],
 
-    contentMap: <{ [key: string]: ContentItem }>{},
+    contentMap: <{ [key: string]: IContentItem }>{},
 
     justAddedContentTrxId: '',
 
@@ -67,6 +67,14 @@ export function createGroupStore() {
       return this.getSeedFromStore(this.id);
     },
 
+    get statusText() {
+      const map = {
+        GROUP_READY: '已同步',
+        GROUP_SYNCING: '同步中',
+      };
+      return map[this.group.GroupStatus];
+    },
+
     setId(id: string) {
       if (this.id === id) {
         return;
@@ -80,7 +88,7 @@ export function createGroupStore() {
       this.initLastReadContentTimeStamps();
     },
 
-    addGroups(groups: Group[] = []) {
+    addGroups(groups: IGroup[] = []) {
       for (const group of groups) {
         if (!this.map[group.GroupId]) {
           this.ids.unshift(group.GroupId);
@@ -89,7 +97,7 @@ export function createGroupStore() {
       }
     },
 
-    updateGroups(groups: Group[] = []) {
+    updateGroups(groups: IGroup[] = []) {
       const current = groups.find((group) => group.GroupId === this.id);
       if (current) {
         this.group.LastUpdate = current.LastUpdate;
@@ -121,7 +129,7 @@ export function createGroupStore() {
       this.currentGroupLastContentTimeStamps = [];
     },
 
-    saveSeedToStore(group: CreateGroupsResult) {
+    saveSeedToStore(group: ICreateGroupsResult) {
       store.set(`group_seed_${group.group_id}`, group);
     },
 
@@ -129,7 +137,7 @@ export function createGroupStore() {
       return store.get(`group_seed_${id}`);
     },
 
-    addContents(contents: ContentItem[] = []) {
+    addContents(contents: IContentItem[] = []) {
       for (const content of contents) {
         this.statusMap[content.TrxId] = this.getContentStatus(content);
         if (this.contentMap[content.TrxId]) {
@@ -157,7 +165,7 @@ export function createGroupStore() {
       this.currentGroupLastContentTimeStamps.push(timestamp);
     },
 
-    getContentStatus(content: ContentItem) {
+    getContentStatus(content: IContentItem) {
       if (content.Publisher) {
         return Status.PUBLISHED;
       }
@@ -175,14 +183,14 @@ export function createGroupStore() {
       this.statusMap[txId] = Status.FAILED;
     },
 
-    saveCachedNewContent(key: string, content: ContentItem) {
+    saveCachedNewContent(key: string, content: IContentItem) {
       const cachedNewContents: any = this.getCachedNewContents(key);
       cachedNewContents.push(content);
       store.set(key, cachedNewContents);
     },
 
     removeCachedNewContent(key: string, txId: string) {
-      const cachedNewContents: ContentItem[] = this.getCachedNewContents(key);
+      const cachedNewContents: IContentItem[] = this.getCachedNewContents(key);
       store.set(
         key,
         cachedNewContents.filter((content) => content.TrxId !== txId)
@@ -190,7 +198,7 @@ export function createGroupStore() {
     },
 
     getCachedNewContents(key: string) {
-      return (store.get(key) || []) as ContentItem[];
+      return (store.get(key) || []) as IContentItem[];
     },
 
     setLastReadContentTimeStamp(groupId: string, timeStamp: number) {

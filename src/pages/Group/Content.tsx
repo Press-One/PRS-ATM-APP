@@ -3,7 +3,7 @@ import { observer, useLocalStore } from 'mobx-react-lite';
 import { ago, sleep } from 'utils';
 import classNames from 'classnames';
 import { FiChevronDown } from 'react-icons/fi';
-import { HiOutlineBan } from 'react-icons/hi';
+import { HiOutlineBan, HiOutlineCheckCircle } from 'react-icons/hi';
 import {
   RiErrorWarningFill,
   RiCheckboxCircleFill,
@@ -11,15 +11,23 @@ import {
 } from 'react-icons/ri';
 import Loading from 'components/Loading';
 import Tooltip from '@material-ui/core/Tooltip';
-import GroupApi, { ContentItem } from 'apis/group';
+import GroupApi, { IContentItem } from 'apis/group';
 import { Status } from 'store/group';
 import { useStore } from 'store';
 import { Menu, MenuItem } from '@material-ui/core';
 import usePrevious from 'hooks/usePrevious';
 import useIsGroupOwner from 'hooks/useIsGroupOwner';
+import TrxModal from './TrxModal';
+import { MdInfoOutline } from 'react-icons/md';
 
-export default observer((props: { content: ContentItem }) => {
-  const { groupStore, nodeStore, authStore, snackbarStore } = useStore();
+export default observer((props: { content: IContentItem }) => {
+  const {
+    groupStore,
+    nodeStore,
+    authStore,
+    snackbarStore,
+    confirmDialogStore,
+  } = useStore();
   const { statusMap } = groupStore;
   const isCurrentGroupOwner = useIsGroupOwner(groupStore.group);
 
@@ -31,6 +39,7 @@ export default observer((props: { content: ContentItem }) => {
     expand: false,
     anchorEl: null,
     showSuccessChecker: false,
+    showTrxModal: false,
   }));
   const contentRef = React.useRef<any>();
 
@@ -63,60 +72,83 @@ export default observer((props: { content: ContentItem }) => {
     state.anchorEl = null;
   };
 
-  const ban = async (userId: any) => {
-    try {
-      await GroupApi.createBlacklist({
-        type: 'Add',
-        object: {
-          type: 'Auth',
-          id: userId,
-        },
-        target: {
-          id: groupStore.id,
-          type: 'Group',
-        },
-      });
-      handleMenuClose();
-      await sleep(200);
-      snackbarStore.show({
-        message: '请求已提交，等待其他节点同步',
-        duration: 2500,
-      });
-    } catch (err) {
-      console.log(err.message);
-      snackbarStore.show({
-        message: '貌似出错了',
-        type: 'error',
-      });
-    }
+  const ban = (userId: any) => {
+    handleMenuClose();
+    confirmDialogStore.show({
+      content: '确定禁止 Ta 发布内容？',
+      okText: '确定',
+      ok: async () => {
+        try {
+          await GroupApi.createBlacklist({
+            type: 'Add',
+            object: {
+              type: 'Auth',
+              id: userId,
+            },
+            target: {
+              id: groupStore.id,
+              type: 'Group',
+            },
+          });
+          confirmDialogStore.hide();
+          await sleep(200);
+          snackbarStore.show({
+            message: '请求已提交，等待其他节点同步',
+            duration: 2500,
+          });
+        } catch (err) {
+          console.log(err.message);
+          snackbarStore.show({
+            message: '貌似出错了',
+            type: 'error',
+          });
+        }
+      },
+    });
   };
 
-  const allow = async (userId: any) => {
-    try {
-      await GroupApi.createBlacklist({
-        type: 'Remove',
-        object: {
-          type: 'Auth',
-          id: userId,
-        },
-        target: {
-          id: groupStore.id,
-          type: 'Group',
-        },
-      });
-      handleMenuClose();
-      await sleep(200);
-      snackbarStore.show({
-        message: '请求已提交，等待其他节点同步',
-        duration: 2500,
-      });
-    } catch (err) {
-      console.log(err.message);
-      snackbarStore.show({
-        message: '貌似出错了',
-        type: 'error',
-      });
-    }
+  const allow = (userId: any) => {
+    handleMenuClose();
+    confirmDialogStore.show({
+      content: '确定允许 Ta 发布内容？',
+      okText: '确定',
+      ok: async () => {
+        try {
+          await GroupApi.createBlacklist({
+            type: 'Remove',
+            object: {
+              type: 'Auth',
+              id: userId,
+            },
+            target: {
+              id: groupStore.id,
+              type: 'Group',
+            },
+          });
+          confirmDialogStore.hide();
+          await sleep(200);
+          snackbarStore.show({
+            message: '请求已提交，等待其他节点同步',
+            duration: 2500,
+          });
+        } catch (err) {
+          console.log(err.message);
+          snackbarStore.show({
+            message: '貌似出错了',
+            type: 'error',
+          });
+        }
+      },
+    });
+  };
+
+  const openTrxModal = () => {
+    handleMenuClose();
+    state.showTrxModal = true;
+  };
+
+  const closeTrxModal = () => {
+    state.showTrxModal = false;
   };
 
   const Publisher = content.Publisher || nodeStore.info.user_id;
@@ -198,7 +230,11 @@ export default observer((props: { content: ContentItem }) => {
       {status === Status.FAILED && (
         <Tooltip
           placement="top"
-          title="发布失败了，当前网络没有其他节点来同步这条内容，请再加入一个新节点来互相同步"
+          title={
+            nodeStore.info.peers.length > 0
+              ? '这个群组所有的节点都不在线，群组已失效，无法继续使用了'
+              : '"发布失败了，当前网络没有其他节点来同步这条内容，请再加入一个新节点来互相同步"'
+          }
           arrow
         >
           <div className="absolute top-[15px] right-[15px] rounded-full text-red-400 text-12 leading-none font-bold tracking-wide">
@@ -211,55 +247,76 @@ export default observer((props: { content: ContentItem }) => {
           <RiCheckboxCircleFill className="text-20" />
         </div>
       )}
-      {status === Status.PUBLISHED &&
-        !state.showSuccessChecker &&
-        isCurrentGroupOwner &&
-        nodeStore.info.user_id !== content.Publisher && (
-          <div>
-            <div
-              className="absolute top-[8px] right-[8px] text-gray-9b p-2 opacity-90"
-              onClick={handleMenuClick}
-            >
-              <RiMoreFill className="text-20" />
-            </div>
-
-            <Menu
-              anchorEl={state.anchorEl}
-              keepMounted
-              open={Boolean(state.anchorEl)}
-              onClose={handleMenuClose}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              PaperProps={{
-                style: {
-                  width: 120,
-                  margin: '27px 0 0 20px',
-                },
-              }}
-            >
-              {!authStore.blacklistMap[
-                `groupId:${groupStore.id}|userId:${content.Publisher}`
-              ] && (
-                <MenuItem onClick={() => ban(content.Publisher)}>
-                  <div className="flex items-center text-red-400 leading-none pl-1 py-2">
-                    <span className="font-bold">禁止 Ta 发布</span>
-                  </div>
-                </MenuItem>
-              )}
-              {authStore.blacklistMap[
-                `groupId:${groupStore.id}|userId:${content.Publisher}`
-              ] && (
-                <MenuItem onClick={() => allow(content.Publisher)}>
-                  <div className="flex items-center text-gray-600 leading-none pl-1 py-2">
-                    <span className="font-bold">允许 Ta 发布</span>
-                  </div>
-                </MenuItem>
-              )}
-            </Menu>
+      {status === Status.PUBLISHED && !state.showSuccessChecker && (
+        <div>
+          <div
+            className="absolute top-[8px] right-[8px] text-gray-9b p-2 opacity-80"
+            onClick={handleMenuClick}
+          >
+            <RiMoreFill className="text-20" />
           </div>
-        )}
+
+          <Menu
+            anchorEl={state.anchorEl}
+            keepMounted
+            open={Boolean(state.anchorEl)}
+            onClose={handleMenuClose}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            PaperProps={{
+              style: {
+                // width: 110,
+                margin: '27px 0 0 20px',
+              },
+            }}
+          >
+            <MenuItem onClick={() => openTrxModal()}>
+              <div className="flex items-center text-gray-600 leading-none pl-1 py-2 pr-2">
+                <span className="flex items-center mr-3">
+                  <MdInfoOutline className="text-18 opacity-50" />
+                </span>
+                详情
+              </div>
+            </MenuItem>
+            {isCurrentGroupOwner &&
+              nodeStore.info.user_id !== content.Publisher && (
+                <div>
+                  {!authStore.blacklistMap[
+                    `groupId:${groupStore.id}|userId:${content.Publisher}`
+                  ] && (
+                    <MenuItem onClick={() => ban(content.Publisher)}>
+                      <div className="flex items-center text-red-400 leading-none pl-1 py-2 pr-2">
+                        <span className="flex items-center mr-3">
+                          <HiOutlineBan className="text-18 opacity-50" />
+                        </span>
+                        <span>禁止 Ta 发布</span>
+                      </div>
+                    </MenuItem>
+                  )}
+                  {authStore.blacklistMap[
+                    `groupId:${groupStore.id}|userId:${content.Publisher}`
+                  ] && (
+                    <MenuItem onClick={() => allow(content.Publisher)}>
+                      <div className="flex items-center text-green-500 leading-none pl-1 py-2 pr-2">
+                        <span className="flex items-center mr-3">
+                          <HiOutlineCheckCircle className="text-18 opacity-80" />
+                        </span>
+                        <span>允许 Ta 发布</span>
+                      </div>
+                    </MenuItem>
+                  )}
+                </div>
+              )}
+          </Menu>
+        </div>
+      )}
+      <TrxModal
+        trxId={content.TrxId}
+        open={state.showTrxModal}
+        onClose={closeTrxModal}
+      />
       <style jsx>{`
         .border-shadow {
           border: 2px solid hsl(212, 12%, 90%);

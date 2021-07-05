@@ -1,8 +1,8 @@
 import { useStore } from 'store';
 import { isEmpty } from 'lodash';
-import { Group } from 'apis/group';
+import { IGroup } from 'apis/group';
 
-export default (group: Group) => {
+export default (group: IGroup) => {
   const { nodeStore } = useStore();
 
   if (!group || isEmpty(group)) {

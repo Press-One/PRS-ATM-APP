@@ -142,25 +142,23 @@ export default observer(() => {
               onClick={() => openGroup(group.GroupId)}
             >
               <div className="py-1 truncate">{group.GroupName}</div>
-              {groupStore.id !== group.GroupId && (
-                <Badge
-                  className="transform scale-90 mr-1"
-                  badgeContent={unReadCountMap[group.GroupId] || 0}
-                  invisible={!unReadCountMap[group.GroupId]}
-                  color="error"
-                  variant="standard"
-                ></Badge>
-              )}
-              {groupStore.id === group.GroupId && (
-                <div
-                  onClick={(e: any) => {
-                    e.stopPropagation();
-                  }}
-                  className="pl-2 menu text-20"
-                >
-                  <GroupMenu />
-                </div>
-              )}
+              <Badge
+                className="transform scale-90 mr-1"
+                badgeContent={unReadCountMap[group.GroupId] || 0}
+                invisible={!unReadCountMap[group.GroupId]}
+                variant="standard"
+              ></Badge>
+              {groupStore.id === group.GroupId &&
+                !unReadCountMap[group.GroupId] && (
+                  <div
+                    onClick={(e: any) => {
+                      e.stopPropagation();
+                    }}
+                    className="pl-2 menu text-20"
+                  >
+                    <GroupMenu />
+                  </div>
+                )}
             </div>
           </div>
         ))}
