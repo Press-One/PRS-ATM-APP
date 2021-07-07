@@ -1,10 +1,8 @@
-[PRS ATM](https://github.com/Press-One/prs-atm) Desktop App
+Here is a Desktop App of [PRS ATM](https://github.com/Press-One/prs-atm) 
 
 ## Start
-```
-yarn install
-yarn start
-```
+1. Download from [Here](https://github.com/Press-One/PRS-ATM-APP/releases)
+2. Run me. ( If first open, please wait minutes for auto update. )
 
 ## Screenshots
 ![image](https://user-images.githubusercontent.com/8716838/115177237-636c1900-a101-11eb-91c7-609f27ec3f17.png)
